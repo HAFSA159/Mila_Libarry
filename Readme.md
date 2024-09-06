@@ -40,7 +40,6 @@ Ce projet est une application de gestion de bibliothèque municipale développé
 
 - **Java 8**
 - **PostgreSQL** : Pour la persistance des données.
-- **Maven** : Gestionnaire de projet et des dépendances.
 - **Git** : Pour le contrôle de version.
 - **JIRA** : Pour la gestion des tâches et des sprints.
 
@@ -48,7 +47,6 @@ Ce projet est une application de gestion de bibliothèque municipale développé
 
 - **Java 8** ou version ultérieure
 - **PostgreSQL** installé et configuré
-- **Maven** installé
 - **Git** pour la gestion du code source
 
 ## Installation et Configuration
@@ -62,11 +60,6 @@ Ce projet est une application de gestion de bibliothèque municipale développé
 2. **Configurer la base de données PostgreSQL** :
     - Créez une base de données pour l'application.
     - Mettez à jour les paramètres de connexion à la base de données dans le fichier `application.properties`.
-
-3. **Construire le projet avec Maven** :
-    ```bash
-    mvn clean install
-    ```
 
 4. **Exécuter l'application** :
     ```bash
