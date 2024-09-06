@@ -9,6 +9,7 @@ public abstract class Document {
     protected LocalDate datePublication;
     protected int nombreDePages;
 
+
     public abstract void emprunter();
     public abstract void retourner();
     public abstract void afficherDetails();
@@ -17,5 +18,7 @@ public abstract class Document {
     public String getId() {
         return id;
     }
+
+
 }
 
