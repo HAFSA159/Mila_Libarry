@@ -1,7 +1,6 @@
 package com.libary;
 
 import com.libary.utilitaire.DateUtils;
-import com.libary.metier.Bibliotheque;
 import com.libary.metier.Document;
 import com.libary.presentation.ConsoleUI;
 
@@ -48,7 +47,7 @@ public class Main {
                     String title = scanner.nextLine();
                     Document resultByTitle = bibliotheque.chercherParTitre(title);
                     if (resultByTitle != null) {
-                        System.out.println("Document found with the title: " + title);
+                        System.out.println("Document.java found with the title: " + title);
                         resultByTitle.afficherDetails();
                     } else {
                         System.out.println("No document found with the title: " + title);
@@ -136,10 +135,10 @@ public class Main {
         String documentId = scanner.nextLine();
 
         if (bibliotheque.emprunterDocumentParId(documentId)) {
-            System.out.println("Document borrowed successfully.");
+            System.out.println("Document.java borrowed successfully.");
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         } else {
-            System.out.println("Document with ID " + documentId + " not found or already borrowed.");
+            System.out.println("Document.java with ID " + documentId + " not found or already borrowed.");
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         }
     }
@@ -151,10 +150,10 @@ public class Main {
         String returnId = scanner.nextLine();
 
         if (bibliotheque.retournerDocumentParId(returnId)) {
-            System.out.println("Document returned successfully.");
+            System.out.println("Document.java returned successfully.");
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         } else {
-            System.out.println("Document with ID " + returnId + " not found in borrowed list.");
+            System.out.println("Document.java with ID " + returnId + " not found in borrowed list.");
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         }
     }
