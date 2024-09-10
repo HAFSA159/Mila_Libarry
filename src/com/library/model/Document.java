@@ -17,7 +17,7 @@ public abstract class Document {
         this.disponible = true;
     }
 
-    public abstract String getType(); // chaque sous-classe devra implémenter cette méthode
+    public abstract String getType();
 
     public boolean isDisponible() {
         return disponible;
