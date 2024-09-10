@@ -13,27 +13,22 @@ public class DocumentService {
         this.documentDao = documentDao;
     }
 
-    // Ajouter un nouveau document
     public void ajouterDocument(Document document) {
         documentDao.ajouter(document);
     }
 
-    // Supprimer un document
     public void supprimerDocument(int id) {
         documentDao.supprimer(id);
     }
 
-    // Rechercher un document par son ID
     public Optional<Document> trouverDocumentParId(int id) {
         return documentDao.trouverParId(id);
     }
 
-    // Lister tous les documents
     public List<Document> listerDocuments() {
         return documentDao.trouverTous();
     }
 
-    // Rechercher un document par son titre
     public List<Document> rechercherParTitre(String titre) {
         return documentDao.rechercherParTitre(titre);
     }
