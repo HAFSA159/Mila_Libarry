@@ -1,5 +1,6 @@
 package com.libary;
 
+import com.libary.metier.Bibliotheque;
 import com.libary.utilitaire.DateUtils;
 import com.libary.metier.Document;
 import com.libary.presentation.ConsoleUI;
