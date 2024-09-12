@@ -3,39 +3,31 @@ package com.library.model;
 import java.time.LocalDate;
 
 public class Magazine extends Document {
-    private String isbn;
+    private int nombreDePages;
+    private String numero;
 
-    public Magazine(String id, String titre, String auteur, LocalDate datePublication, int nombreDePages, String isbn) {
-        this.id = String.valueOf(id);
-        this.titre = titre;
-        this.auteur = auteur;
-        this.datePublication = datePublication;
+    public Magazine(String id, String titre, String auteur, LocalDate datePublication, int nombreDePages, String numero) {
+        super(id, titre, auteur, datePublication);
         this.nombreDePages = nombreDePages;
-        this.isbn = isbn;
+        this.numero = numero;
     }
 
-    public String getTitre() {
-        return titre;
+    // Getter and Setter methods
+    public int getNombreDePages() {
+        return nombreDePages;
     }
 
-    public void setTitre(String titre) {
-        this.titre = titre;
+    public void setNombreDePages(int nombreDePages) {
+        this.nombreDePages = nombreDePages;
     }
 
-    @Override
-    public void emprunter() {
-        System.out.println("Le Magazine " + titre + " a été emprunté.");
+    public String getNumero() {
+        return numero;
     }
 
-    @Override
-    public void retourner() {
-        System.out.println("Le Magazine " + titre + " a été retourné.");
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 
-    @Override
-    public void afficherDetails() {
-        System.out.println("Magazine [ID: " + id + ", Titre: " + titre + ", Auteur: " + auteur + ", Date de Publication: " + datePublication + ", Nombre de Pages: " + nombreDePages + ", ISBN: " + isbn + "]");
-    }
-
-
+    // Override other methods if needed
 }

@@ -3,37 +3,31 @@ package com.library.model;
 import java.time.LocalDate;
 
 public class Livre extends Document {
+    private int nombreDePages;
     private String isbn;
 
     public Livre(String id, String titre, String auteur, LocalDate datePublication, int nombreDePages, String isbn) {
-        this.id = String.valueOf(id);
-        this.titre = titre;
-        this.auteur = auteur;
-        this.datePublication = datePublication;
+        super(id, titre, auteur, datePublication);
         this.nombreDePages = nombreDePages;
         this.isbn = isbn;
     }
 
-    public String getTitre() {
-        return titre;
+    // Getter and Setter methods
+    public int getNombreDePages() {
+        return nombreDePages;
     }
 
-    public void setTitre(String titre) {
-        this.titre = titre;
+    public void setNombreDePages(int nombreDePages) {
+        this.nombreDePages = nombreDePages;
     }
 
-    @Override
-    public void emprunter() {
-        System.out.println("Le livre " + titre + " a été emprunté.");
+    public String getIsbn() {
+        return isbn;
     }
 
-    @Override
-    public void retourner() {
-        System.out.println("Le livre " + titre + " a été retourné.");
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
-    @Override
-    public void afficherDetails() {
-        System.out.println("Livre [ID: " + id + ", Titre: " + titre + ", Auteur: " + auteur + ", Date de Publication: " + datePublication + ", Nombre de Pages: " + nombreDePages + ", ISBN: " + isbn + "]");
-    }
+    // Override other methods if needed
 }

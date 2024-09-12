@@ -18,16 +18,19 @@ public class TheseUniversitaire extends Document {
 
     @Override
     public void emprunter() {
+        // Logic for borrowing the thesis
         System.out.println("La thèse universitaire '" + titre + "' a été empruntée.");
     }
 
     @Override
     public void retourner() {
+        // Logic for returning the thesis
         System.out.println("La thèse universitaire '" + titre + "' a été retournée.");
     }
 
     @Override
     public void afficherDetails() {
+        // Display the details of the thesis
         System.out.println("ID: " + id);
         System.out.println("Titre: " + titre);
         System.out.println("Auteur: " + auteur);
@@ -37,6 +40,7 @@ public class TheseUniversitaire extends Document {
         System.out.println("Domaine: " + domaine);
     }
 
+    // Getters and setters for universite and domaine if needed
     public String getUniversite() {
         return universite;
     }

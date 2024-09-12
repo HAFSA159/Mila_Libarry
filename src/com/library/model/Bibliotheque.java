@@ -35,7 +35,7 @@ public class Bibliotheque {
         return titleMap.get(titre.toLowerCase());
     }
 
-    public void supprimerDocument(String titre) {
+    public boolean supprimerDocument(String titre) {
         Document document = rechercherDocumentParTitre(titre);
         if (document != null) {
             documents.remove(document);
@@ -44,17 +44,20 @@ public class Bibliotheque {
         } else {
             System.out.println("Document not found.");
         }
+        return false;
     }
 
     public void afficherTousLesDocuments() {
         if (documents.isEmpty()) {
-            System.out.println("No documents in the library.");
+            System.out.println("No documents available in the library.");
         } else {
+            System.out.println("************ All Documents in the Library ************");
             for (Document doc : documents) {
                 doc.afficherDetails();
             }
         }
     }
+
 
     public void afficherDocumentsEmpruntes() {
         if (borrowedDocuments.isEmpty()) {

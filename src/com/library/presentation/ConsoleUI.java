@@ -5,6 +5,7 @@ import com.library.model.Livre;
 import com.library.model.Magazine;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class ConsoleUI {
@@ -19,8 +20,7 @@ public class ConsoleUI {
         boolean continueRunning = true;
         while (continueRunning) {
             afficherMenu();
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            int choice = getIntInput();
 
             switch (choice) {
                 case 1:
@@ -43,12 +43,12 @@ public class ConsoleUI {
     }
 
     private void afficherMenu() {
-        System.out.println("************ Bienvenu a Mila Library ************");
+        System.out.println("************ Bienvenu à Mila Library ************");
         System.out.println("Veuillez vous identifier:");
         System.out.println("1. Étudiant");
         System.out.println("2. Professeur");
         System.out.println("3. Admin");
-        System.out.println("9. Quitter");
+        System.out.println("4. Quitter");
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         System.out.print("Choisissez une option: ");
     }
@@ -63,8 +63,7 @@ public class ConsoleUI {
             System.out.println("4. Rechercher un document");
             System.out.println("5. Quitter");
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            int choix = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            int choix = getIntInput();
 
             switch (choix) {
                 case 1:
@@ -74,7 +73,7 @@ public class ConsoleUI {
                     // Implement retourner document logic
                     break;
                 case 3:
-                    // Implement afficher tous les documents logic
+                    bibliotheque.afficherTousLesDocuments();
                     break;
                 case 4:
                     // Implement rechercher document logic
@@ -101,8 +100,7 @@ public class ConsoleUI {
             System.out.println("6. Afficher les Journaux Scientifiques");
             System.out.println("7. Quitter");
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            int choix = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            int choix = getIntInput();
 
             switch (choix) {
                 case 1:
@@ -112,7 +110,7 @@ public class ConsoleUI {
                     // Implement retourner document logic
                     break;
                 case 3:
-                    // Implement afficher tous les documents logic
+                    bibliotheque.afficherTousLesDocuments();
                     break;
                 case 4:
                     // Implement rechercher document logic
@@ -142,14 +140,11 @@ public class ConsoleUI {
             System.out.println("3. Supprimer un document");
             System.out.println("4. Afficher tous les documents");
             System.out.println("5. Rechercher un document");
-            System.out.println("6. Afficher les Thèses Universitaires");
-            System.out.println("7. Afficher les Journaux Scientifiques");
-            System.out.println("8. Gérer les utilisateurs");
-            System.out.println("9. Quitter");
+            System.out.println("6. Gérer les utilisateurs");
+            System.out.println("7. Quitter");
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
-            int choix = scanner.nextInt();
-            scanner.nextLine();
+            int choix = getIntInput();
 
             switch (choix) {
                 case 1:
@@ -162,9 +157,15 @@ public class ConsoleUI {
                     supprimerDocument();
                     break;
                 case 4:
-                    //afficherTousLesDocuments();
+                    bibliotheque.afficherTousLesDocuments();
                     break;
-                case 9:
+                case 5:
+                    // Rechercher un document
+                    break;
+                case 6:
+                    // Gérer les utilisateurs
+                    break;
+                case 7:
                     continueAdmin = false;
                     System.out.println("Retour au menu principal.");
                     break;
@@ -173,13 +174,13 @@ public class ConsoleUI {
             }
         }
     }
+    //**************************************************************//
 
     private void ajouterDocument() {
         System.out.println("You want to add:");
         System.out.println("1. Livre");
         System.out.println("2. Magazine");
-        int userChoice = scanner.nextInt();
-        scanner.nextLine();
+        int userChoice = getIntInput();
 
         if (userChoice == 1) {
             System.out.println("Enter details for Livre:");
@@ -188,10 +189,9 @@ public class ConsoleUI {
             System.out.print("Author: ");
             String auteur = scanner.nextLine();
             System.out.print("Publication Date (yyyy-mm-dd): ");
-            LocalDate datePublication = readDate(scanner);
+            LocalDate datePublication = readDate();
             System.out.print("Number of Pages: ");
-            int nombreDePages = scanner.nextInt();
-            scanner.nextLine();
+            int nombreDePages = getIntInput();
             System.out.print("ISBN: ");
             String isbn = scanner.nextLine();
 
@@ -206,10 +206,9 @@ public class ConsoleUI {
             System.out.print("Author: ");
             String auteur = scanner.nextLine();
             System.out.print("Publication Date (yyyy-mm-dd): ");
-            LocalDate datePublication = readDate(scanner);
+            LocalDate datePublication = readDate();
             System.out.print("Number of Pages: ");
-            int nombreDePages = scanner.nextInt();
-            scanner.nextLine();
+            int nombreDePages = getIntInput();
             System.out.print("Issue Number: ");
             String numero = scanner.nextLine();
 
@@ -237,22 +236,66 @@ public class ConsoleUI {
             if (document instanceof Livre) {
                 System.out.println("5. ISBN");
             } else if (document instanceof Magazine) {
-                System.out.println("5. Number");
+                System.out.println("5. Issue Number");
             }
-            int choix = scanner.nextInt();
-            scanner.nextLine();
+            int choix = getIntInput();
 
-            if (choix == 1) {
-                System.out.print("Enter new title: ");
-                String nouveauTitre = scanner.nextLine();
-                if (document instanceof Livre) {
-                    ((Livre) document).setTitre(nouveauTitre);
-                } else if (document instanceof Magazine) {
-                    ((Magazine) document).setTitre(nouveauTitre);
-                }
-                System.out.println("Title updated successfully.");
-            } else {
-                System.out.println("Invalid choice.");
+            switch (choix) {
+                case 1:
+                    System.out.print("Enter new title: ");
+                    String nouveauTitre = scanner.nextLine();
+                    if (document instanceof Livre) {
+                        ((Livre) document).setTitre(nouveauTitre);
+                    } else if (document instanceof Magazine) {
+                        ((Magazine) document).setTitre(nouveauTitre);
+                    }
+                    System.out.println("Title updated successfully.");
+                    break;
+                case 2:
+                    System.out.print("Enter new author: ");
+                    String nouvelAuteur = scanner.nextLine();
+                    if (document instanceof Livre) {
+                        ((Livre) document).setAuteur(nouvelAuteur);
+                    } else if (document instanceof Magazine) {
+                        ((Magazine) document).setAuteur(nouvelAuteur);
+                    }
+                    System.out.println("Author updated successfully.");
+                    break;
+                case 3:
+                    System.out.print("Enter new publication date (yyyy-mm-dd): ");
+                    LocalDate nouvelleDatePublication = readDate();
+                    if (document instanceof Livre) {
+                        ((Livre) document).setDatePublication(nouvelleDatePublication);
+                    } else if (document instanceof Magazine) {
+                        ((Magazine) document).setDatePublication(nouvelleDatePublication);
+                    }
+                    System.out.println("Publication date updated successfully.");
+                    break;
+                case 4:
+                    System.out.print("Enter new number of pages: ");
+                    int nouveauNombreDePages = getIntInput();
+                    if (document instanceof Livre) {
+                        ((Livre) document).setNombreDePages(nouveauNombreDePages);
+                    } else if (document instanceof Magazine) {
+                        ((Magazine) document).setNombreDePages(nouveauNombreDePages);
+                    }
+                    System.out.println("Number of pages updated successfully.");
+                    break;
+                case 5:
+                    if (document instanceof Livre) {
+                        System.out.print("Enter new ISBN: ");
+                        String nouveauISBN = scanner.nextLine();
+                        ((Livre) document).setIsbn(nouveauISBN);
+                        System.out.println("ISBN updated successfully.");
+                    } else if (document instanceof Magazine) {
+                        System.out.print("Enter new issue number: ");
+                        String nouveauNumero = scanner.nextLine();
+                        ((Magazine) document).setNumero(nouveauNumero);
+                        System.out.println("Issue number updated successfully.");
+                    }
+                    break;
+                default:
+                    System.out.println("Invalid choice. No changes made.");
             }
         } else {
             System.out.println("Document not found.");
@@ -262,20 +305,33 @@ public class ConsoleUI {
     private void supprimerDocument() {
         System.out.println("Enter the title of the document you want to delete:");
         String titre = scanner.nextLine();
-        Object document = bibliotheque.rechercherDocumentParTitre(titre);
+        boolean success = bibliotheque.supprimerDocument(titre);
 
-        if (document != null) {
-            bibliotheque.supprimerDocument(titre);
+        if (success) {
             System.out.println("Document deleted successfully.");
         } else {
             System.out.println("Document not found.");
         }
     }
 
+    private LocalDate readDate() {
+        while (true) {
+            try {
+                String dateInput = scanner.nextLine();
+                return LocalDate.parse(dateInput);
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format. Please enter date in yyyy-mm-dd format:");
+            }
+        }
+    }
 
-    private LocalDate readDate(Scanner scanner) {
-        System.out.print("Enter date (yyyy-mm-dd): ");
-        String dateInput = scanner.nextLine();
-        return LocalDate.parse(dateInput); // Parse date from string
+    private int getIntInput() {
+        while (true) {
+            try {
+                return Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a number:");
+            }
+        }
     }
 }
