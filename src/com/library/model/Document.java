@@ -3,38 +3,18 @@ package com.library.model;
 import java.time.LocalDate;
 
 public abstract class Document {
-    protected int id;
+    protected String id;
     protected String titre;
     protected String auteur;
-    protected int anneePublication;
-    protected boolean disponible;
+    protected LocalDate datePublication;
+    protected int nombreDePages;
 
-    public Document(int id, String titre, String auteur, int anneePublication) {
-        this.id = id;
-        this.titre = titre;
-        this.auteur = auteur;
-        this.anneePublication = anneePublication;
-        this.disponible = true;
-    }
+    public abstract void emprunter();
+    public abstract void retourner();
+    public abstract void afficherDetails();
 
-    public abstract String getType();
 
-    public boolean isDisponible() {
-        return disponible;
-    }
-
-    protected void setDisponible(boolean disponible) {
-        this.disponible = disponible;
-    }
-
-    @Override
-    public String toString() {
-        return "Document{" +
-                "id=" + id +
-                ", titre='" + titre + '\'' +
-                ", auteur='" + auteur + '\'' +
-                ", anneePublication=" + anneePublication +
-                ", disponible=" + disponible +
-                '}';
+    public String getId() {
+        return id;
     }
 }

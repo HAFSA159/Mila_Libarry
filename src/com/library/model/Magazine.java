@@ -1,20 +1,31 @@
 package com.library.model;
 
+import java.time.LocalDate;
+
 public class Magazine extends Document {
-    private int numeroEdition;
+    private String isbn;
 
-    public Magazine(int id, String titre, String auteur, int anneePublication, int numeroEdition) {
-        super(id, titre, auteur, anneePublication);
-        this.numeroEdition = numeroEdition;
+    public Magazine(String id, String titre, String auteur, LocalDate datePublication, int nombreDePages, String isbn) {
+        this.id = String.valueOf(id);
+        this.titre = titre;
+        this.auteur = auteur;
+        this.datePublication = datePublication;
+        this.nombreDePages = nombreDePages;
+        this.isbn = isbn;
     }
 
     @Override
-    public String getType() {
-        return "Magazine";
+    public void emprunter() {
+        System.out.println("Le Magazine " + titre + " a été emprunté.");
     }
 
     @Override
-    public String toString() {
-        return super.toString() + ", Magazine{numeroEdition=" + numeroEdition + '}';
+    public void retourner() {
+        System.out.println("Le Magazine " + titre + " a été retourné.");
+    }
+
+    @Override
+    public void afficherDetails() {
+        System.out.println("Magazine [ID: " + id + ", Titre: " + titre + ", Auteur: " + auteur + ", Date de Publication: " + datePublication + ", Nombre de Pages: " + nombreDePages + ", ISBN: " + isbn + "]");
     }
 }

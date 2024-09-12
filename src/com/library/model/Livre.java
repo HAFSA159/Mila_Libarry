@@ -1,22 +1,31 @@
 package com.library.model;
 
+import java.time.LocalDate;
+
 public class Livre extends Document {
     private String isbn;
-    private int nombrePages;
 
-    public Livre(int id, String titre, String auteur, int anneePublication, String isbn, int nombrePages) {
-        super(id, titre, auteur, anneePublication);
+    public Livre(String id, String titre, String auteur, LocalDate datePublication, int nombreDePages, String isbn) {
+        this.id = String.valueOf(id);
+        this.titre = titre;
+        this.auteur = auteur;
+        this.datePublication = datePublication;
+        this.nombreDePages = nombreDePages;
         this.isbn = isbn;
-        this.nombrePages = nombrePages;
     }
 
     @Override
-    public String getType() {
-        return "Livre";
+    public void emprunter() {
+        System.out.println("Le livre " + titre + " a été emprunté.");
     }
 
     @Override
-    public String toString() {
-        return super.toString() + ", Livre{isbn='" + isbn + "', nombrePages=" + nombrePages + '}';
+    public void retourner() {
+        System.out.println("Le livre " + titre + " a été retourné.");
+    }
+
+    @Override
+    public void afficherDetails() {
+        System.out.println("Livre [ID: " + id + ", Titre: " + titre + ", Auteur: " + auteur + ", Date de Publication: " + datePublication + ", Nombre de Pages: " + nombreDePages + ", ISBN: " + isbn + "]");
     }
 }
