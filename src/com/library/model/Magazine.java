@@ -14,6 +14,14 @@ public class Magazine extends Document {
         this.isbn = isbn;
     }
 
+    public String getTitre() {
+        return titre;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+
     @Override
     public void emprunter() {
         System.out.println("Le Magazine " + titre + " a été emprunté.");
@@ -28,4 +36,6 @@ public class Magazine extends Document {
     public void afficherDetails() {
         System.out.println("Magazine [ID: " + id + ", Titre: " + titre + ", Auteur: " + auteur + ", Date de Publication: " + datePublication + ", Nombre de Pages: " + nombreDePages + ", ISBN: " + isbn + "]");
     }
+
+
 }

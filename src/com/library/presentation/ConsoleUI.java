@@ -1,6 +1,8 @@
 package com.library.presentation;
 
 import com.library.model.Bibliotheque;
+import com.library.model.Livre;
+import com.library.model.Magazine;
 
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -18,7 +20,7 @@ public class ConsoleUI {
         while (continueRunning) {
             afficherMenu();
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -147,17 +149,17 @@ public class ConsoleUI {
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
             int choix = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
 
             switch (choix) {
                 case 1:
                     ajouterDocument();
                     break;
                 case 2:
-                    //modifierDocument();
+                    modifierDocument();
                     break;
                 case 3:
-                    //supprimerDocument();
+                    supprimerDocument();
                     break;
                 case 4:
                     //afficherTousLesDocuments();
@@ -220,6 +222,56 @@ public class ConsoleUI {
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         }
     }
+
+    private void modifierDocument() {
+        System.out.println("Enter the title of the document you want to modify:");
+        String titre = scanner.nextLine();
+        Object document = bibliotheque.rechercherDocumentParTitre(titre);
+
+        if (document != null) {
+            System.out.println("Document found. What would you like to modify?");
+            System.out.println("1. Title");
+            System.out.println("2. Author");
+            System.out.println("3. Publication Date");
+            System.out.println("4. Number of Pages");
+            if (document instanceof Livre) {
+                System.out.println("5. ISBN");
+            } else if (document instanceof Magazine) {
+                System.out.println("5. Number");
+            }
+            int choix = scanner.nextInt();
+            scanner.nextLine();
+
+            if (choix == 1) {
+                System.out.print("Enter new title: ");
+                String nouveauTitre = scanner.nextLine();
+                if (document instanceof Livre) {
+                    ((Livre) document).setTitre(nouveauTitre);
+                } else if (document instanceof Magazine) {
+                    ((Magazine) document).setTitre(nouveauTitre);
+                }
+                System.out.println("Title updated successfully.");
+            } else {
+                System.out.println("Invalid choice.");
+            }
+        } else {
+            System.out.println("Document not found.");
+        }
+    }
+
+    private void supprimerDocument() {
+        System.out.println("Enter the title of the document you want to delete:");
+        String titre = scanner.nextLine();
+        Object document = bibliotheque.rechercherDocumentParTitre(titre);
+
+        if (document != null) {
+            bibliotheque.supprimerDocument(titre);
+            System.out.println("Document deleted successfully.");
+        } else {
+            System.out.println("Document not found.");
+        }
+    }
+
 
     private LocalDate readDate(Scanner scanner) {
         System.out.print("Enter date (yyyy-mm-dd): ");

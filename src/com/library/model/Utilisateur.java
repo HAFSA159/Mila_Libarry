@@ -7,7 +7,7 @@ public abstract class Utilisateur {
 
     public Utilisateur(int id, String nom, String email) {
         this.id = id;
-        this.nom = formatNom(nom); // Format the name upon construction
+        this.nom = formatNom(nom);
         this.email = email;
     }
 
@@ -20,7 +20,7 @@ public abstract class Utilisateur {
     }
 
     public void setNom(String nom) {
-        this.nom = formatNom(nom); // Format the name when setting it
+        this.nom = formatNom(nom);
     }
 
     public String getEmail() {
@@ -40,7 +40,6 @@ public abstract class Utilisateur {
                 '}';
     }
 
-    // Helper method to format the name correctly
     private String formatNom(String nom) {
         if (nom == null || nom.isEmpty()) {
             return nom;

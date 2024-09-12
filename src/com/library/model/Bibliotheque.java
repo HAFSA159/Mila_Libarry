@@ -19,7 +19,6 @@ public class Bibliotheque {
         return new ArrayList<>(documents);
     }
 
-
     public void ajouterLivre(String titre, String auteur, LocalDate datePublication, int nombreDePages, String isbn) {
         Livre livre = new Livre(String.valueOf(generateId()), titre, auteur, datePublication, nombreDePages, isbn);
         documents.add(livre);
@@ -32,9 +31,28 @@ public class Bibliotheque {
         titleMap.put(titre.toLowerCase(), magazine);
     }
 
+    public Document rechercherDocumentParTitre(String titre) {
+        return titleMap.get(titre.toLowerCase());
+    }
+
+    public void supprimerDocument(String titre) {
+        Document document = rechercherDocumentParTitre(titre);
+        if (document != null) {
+            documents.remove(document);
+            titleMap.remove(titre.toLowerCase());
+            System.out.println("Document removed successfully.");
+        } else {
+            System.out.println("Document not found.");
+        }
+    }
+
     public void afficherTousLesDocuments() {
-        for (Document doc : documents) {
-            doc.afficherDetails();
+        if (documents.isEmpty()) {
+            System.out.println("No documents in the library.");
+        } else {
+            for (Document doc : documents) {
+                doc.afficherDetails();
+            }
         }
     }
 
@@ -59,15 +77,10 @@ public class Bibliotheque {
         return false;
     }
 
-    public Document chercherParTitre(String titre) {
-        return titleMap.get(titre.toLowerCase());
-    }
-
     public boolean retournerDocumentParId(String id) {
-        for (int i = 0; i < borrowedDocuments.size(); i++) {
-            Document doc = borrowedDocuments.get(i);
+        for (Document doc : borrowedDocuments) {
             if (doc.getId().equals(id)) {
-                borrowedDocuments.remove(i);
+                borrowedDocuments.remove(doc);
                 documents.add(doc);
                 return true;
             }

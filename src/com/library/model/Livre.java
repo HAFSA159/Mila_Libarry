@@ -14,6 +14,14 @@ public class Livre extends Document {
         this.isbn = isbn;
     }
 
+    public String getTitre() {
+        return titre;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+
     @Override
     public void emprunter() {
         System.out.println("Le livre " + titre + " a été emprunté.");
