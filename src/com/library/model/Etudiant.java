@@ -8,7 +8,7 @@ public class Etudiant extends Utilisateur {
 
     @Override
     public String getType() {
-        return "Etudiant";
+        return "Étudiant";
     }
 
     @Override
