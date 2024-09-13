@@ -3,7 +3,6 @@ package com.library.model;
 import java.time.LocalDate;
 
 public class TheseUniversitaire extends Document {
-    private int nombreDePages;
     private String universite;
     private String domaine;
 

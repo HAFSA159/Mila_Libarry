@@ -3,7 +3,6 @@ package com.library.model;
 import java.time.LocalDate;
 
 public class Magazine extends Document {
-    private int nombreDePages;
     private String numero;
 
     public Magazine(String titre, String auteur, LocalDate datePublication, int nombreDePages, String numero) {

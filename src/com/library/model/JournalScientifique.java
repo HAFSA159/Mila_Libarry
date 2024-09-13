@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 public class JournalScientifique extends Document {
     private final String domaineRecherche;
-    private int nombreDePages;
 
     public JournalScientifique(String titre, String auteur, LocalDate datePublication, int nombreDePages, String domaineRecherche) {
         super(titre, auteur, datePublication);

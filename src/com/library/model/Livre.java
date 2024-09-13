@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Livre extends Document {
-    private int nombreDePages;
     private String isbn;
 
     public Livre() {

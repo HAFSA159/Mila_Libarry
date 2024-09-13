@@ -7,6 +7,7 @@ public abstract class Document {
     private String titre;
     private String auteur;
     protected LocalDate datePublication;
+    public int nombreDePages;
 
 
     public Document(String id,String titre, String auteur, LocalDate datePublication) {
