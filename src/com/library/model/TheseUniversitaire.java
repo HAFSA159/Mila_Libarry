@@ -1,13 +1,17 @@
 package com.library.model;
 
+import com.library.dao.DocumentDAO;
+import com.library.utilitaire.InputValidator;
+
 import java.time.LocalDate;
+import java.util.Scanner;
 
 public class TheseUniversitaire extends Document {
     private String universite;
     private String domaine;
 
     public TheseUniversitaire(String titre, String auteur, LocalDate datePublication, int nombreDePages, String universite, String domaine) {
-        super(titre, auteur, datePublication);  // Calling the parent constructor
+        super(titre, auteur, datePublication);
         this.nombreDePages = nombreDePages;
         this.universite = universite;
         this.domaine = domaine;
@@ -22,6 +26,21 @@ public class TheseUniversitaire extends Document {
         this.nombreDePages = nombreDePages;
     }
 
+    public String getUniversite() {
+        return universite;
+    }
+
+    public void setUniversite(String universite) {
+        this.universite = universite;
+    }
+
+    public String getDomaine() {
+        return domaine;
+    }
+
+    public void setDomaine(String domaine) {
+        this.domaine = domaine;
+    }
 
     @Override
     public void afficherDetails() {
@@ -34,5 +53,24 @@ public class TheseUniversitaire extends Document {
         System.out.println("Domaine: " + domaine);
     }
 
+    public static void enterTheseUniversitaire() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter details for Thèse Universitaire:");
+        System.out.print("Title: ");
+        String theseTitre = scanner.nextLine();
+        System.out.print("Author: ");
+        String theseAuteur = scanner.nextLine();
+        System.out.print("Publication Date (yyyy-mm-dd): ");
+        LocalDate theseDatePublication = InputValidator.readDate();
+        System.out.print("Number of Pages: ");
+        int theseNombreDePages = InputValidator.getIntInput();
+        System.out.print("University: ");
+        String universite = scanner.nextLine();
+        System.out.print("Field of Study: ");
+        String domaine = scanner.nextLine();
 
+        TheseUniversitaire theseUniversitaire = new TheseUniversitaire(theseTitre, theseAuteur, theseDatePublication, theseNombreDePages, universite, domaine);
+
+        DocumentDAO.ajouterTheseUniversitaire(theseUniversitaire);
+    }
 }
