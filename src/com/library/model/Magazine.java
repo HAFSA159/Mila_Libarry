@@ -12,7 +12,6 @@ public class Magazine extends Document {
         this.numero = numero;
     }
 
-    // Getter and Setter methods
     public int getNombreDePages() {
         return nombreDePages;
     }
@@ -29,5 +28,9 @@ public class Magazine extends Document {
         this.numero = numero;
     }
 
-    // Override other methods if needed
+    @Override
+    public void afficherDetails() {
+
+    }
+
 }

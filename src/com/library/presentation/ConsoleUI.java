@@ -174,51 +174,98 @@ public class ConsoleUI {
             }
         }
     }
+
     //**************************************************************//
 
     private void ajouterDocument() {
         System.out.println("You want to add:");
         System.out.println("1. Livre");
         System.out.println("2. Magazine");
+        System.out.println("3. Journal Scientifique");
+        System.out.println("4. Thèse Universitaire");
         int userChoice = getIntInput();
 
-        if (userChoice == 1) {
-            System.out.println("Enter details for Livre:");
-            System.out.print("Title: ");
-            String titre = scanner.nextLine();
-            System.out.print("Author: ");
-            String auteur = scanner.nextLine();
-            System.out.print("Publication Date (yyyy-mm-dd): ");
-            LocalDate datePublication = readDate();
-            System.out.print("Number of Pages: ");
-            int nombreDePages = getIntInput();
-            System.out.print("ISBN: ");
-            String isbn = scanner.nextLine();
+        switch (userChoice) {
+            case 1:
+                System.out.println("Enter details for Livre:");
+                System.out.print("Title: ");
+                String livreTitre = scanner.nextLine();
+                System.out.print("Author: ");
+                String livreAuteur = scanner.nextLine();
+                System.out.print("Publication Date (yyyy-mm-dd): ");
+                LocalDate livreDatePublication = readDate();
+                System.out.print("Number of Pages: ");
+                int livreNombreDePages = getIntInput();
+                System.out.print("ISBN: ");
+                String isbn = scanner.nextLine();
 
-            bibliotheque.ajouterLivre(titre, auteur, datePublication, nombreDePages, isbn);
-            System.out.println("Livre added successfully!");
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                bibliotheque.ajouterLivre(livreTitre, livreAuteur, livreDatePublication, livreNombreDePages, isbn);
+                System.out.println("Livre added successfully!");
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                break;
 
-        } else if (userChoice == 2) {
-            System.out.println("Enter details for Magazine:");
-            System.out.print("Title: ");
-            String titre = scanner.nextLine();
-            System.out.print("Author: ");
-            String auteur = scanner.nextLine();
-            System.out.print("Publication Date (yyyy-mm-dd): ");
-            LocalDate datePublication = readDate();
-            System.out.print("Number of Pages: ");
-            int nombreDePages = getIntInput();
-            System.out.print("Issue Number: ");
-            String numero = scanner.nextLine();
+            case 2:
+                System.out.println("Enter details for Magazine:");
+                System.out.print("Title: ");
+                String magazineTitre = scanner.nextLine();
+                System.out.print("Author: ");
+                String magazineAuteur = scanner.nextLine();
+                System.out.print("Publication Date (yyyy-mm-dd): ");
+                LocalDate magazineDatePublication = readDate();
+                System.out.print("Number of Pages: ");
+                int magazineNombreDePages = getIntInput();
+                System.out.print("Issue Number: ");
+                String numero = scanner.nextLine();
 
-            bibliotheque.ajouterMagazine(titre, auteur, datePublication, nombreDePages, numero);
-            System.out.println("Magazine added successfully!");
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                bibliotheque.ajouterMagazine(magazineTitre, magazineAuteur, magazineDatePublication, magazineNombreDePages, numero);
+                System.out.println("Magazine added successfully!");
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                break;
 
-        } else {
-            System.out.println("Invalid choice. Please choose again.");
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            case 3:
+                System.out.println("Enter details for Journal Scientifique:");
+                System.out.print("Title: ");
+                String journalTitre = scanner.nextLine();
+                System.out.print("Author: ");
+                String journalAuteur = scanner.nextLine();
+                System.out.print("Publication Date (yyyy-mm-dd): ");
+                LocalDate journalDatePublication = readDate();
+                System.out.print("Number of Pages: ");
+                int journalNombreDePages = getIntInput();
+                System.out.print("Research Domain: ");
+                String domaineRecherche = scanner.nextLine();
+
+                // Assuming you have a method to add JournalScientifique in Bibliotheque
+                bibliotheque.ajouterJournalScientifique(journalTitre, journalAuteur, journalDatePublication, journalNombreDePages, domaineRecherche);
+                System.out.println("Journal Scientifique added successfully!");
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                break;
+
+            case 4:
+                System.out.println("Enter details for Thèse Universitaire:");
+                System.out.print("Title: ");
+                String theseTitre = scanner.nextLine();
+                System.out.print("Author: ");
+                String theseAuteur = scanner.nextLine();
+                System.out.print("Publication Date (yyyy-mm-dd): ");
+                LocalDate theseDatePublication = readDate();
+                System.out.print("Number of Pages: ");
+                int theseNombreDePages = getIntInput();
+                System.out.print("University: ");
+                String universite = scanner.nextLine();
+                System.out.print("Domain: ");
+                String domaine = scanner.nextLine();
+
+                // Assuming you have a method to add TheseUniversitaire in Bibliotheque
+                bibliotheque.ajouterTheseUniversitaire(theseTitre, theseAuteur, theseDatePublication, theseNombreDePages, universite, domaine);
+                System.out.println("Thèse Universitaire added successfully!");
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                break;
+
+            default:
+                System.out.println("Invalid choice. Please choose again.");
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                break;
         }
     }
 

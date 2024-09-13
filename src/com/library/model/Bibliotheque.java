@@ -31,6 +31,18 @@ public class Bibliotheque {
         titleMap.put(titre.toLowerCase(), magazine);
     }
 
+    public void ajouterJournalScientifique(String titre, String auteur, LocalDate datePublication, int nombreDePages, String domaineRecherche) {
+        JournalScientifique journal = new JournalScientifique(String.valueOf(generateId()), titre, auteur, datePublication, nombreDePages, domaineRecherche);
+        documents.add(journal);
+        titleMap.put(titre.toLowerCase(), journal);
+    }
+
+    public void ajouterTheseUniversitaire(String titre, String auteur, LocalDate datePublication, int nombreDePages, String universite, String domaine) {
+        TheseUniversitaire these = new TheseUniversitaire(String.valueOf(generateId()), titre, auteur, datePublication, nombreDePages, universite, domaine);
+        documents.add(these);
+        titleMap.put(titre.toLowerCase(), these);
+    }
+
     public Document rechercherDocumentParTitre(String titre) {
         return titleMap.get(titre.toLowerCase());
     }
@@ -57,7 +69,6 @@ public class Bibliotheque {
             }
         }
     }
-
 
     public void afficherDocumentsEmpruntes() {
         if (borrowedDocuments.isEmpty()) {

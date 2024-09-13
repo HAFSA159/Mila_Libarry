@@ -29,5 +29,10 @@ public class Livre extends Document {
         this.isbn = isbn;
     }
 
+    @Override
+    public void afficherDetails() {
+
+    }
+
     // Override other methods if needed
 }

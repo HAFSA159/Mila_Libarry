@@ -6,7 +6,7 @@ public abstract class Document {
     private String id;
     private String titre;
     private String auteur;
-    private LocalDate datePublication;
+    protected LocalDate datePublication;  // Changed from private to protected
 
     public Document(String id, String titre, String auteur, LocalDate datePublication) {
         this.id = id;
