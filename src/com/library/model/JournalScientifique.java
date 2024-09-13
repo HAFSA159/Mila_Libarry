@@ -6,8 +6,8 @@ public class JournalScientifique extends Document {
     private final String domaineRecherche;
     private int nombreDePages;
 
-    public JournalScientifique(String id, String titre, String auteur, LocalDate datePublication, int nombreDePages, String domaineRecherche) {
-        super(id, titre, auteur, datePublication);
+    public JournalScientifique(String titre, String auteur, LocalDate datePublication, int nombreDePages, String domaineRecherche) {
+        super(titre, auteur, datePublication);
         this.nombreDePages = nombreDePages;
         this.domaineRecherche = domaineRecherche;
     }

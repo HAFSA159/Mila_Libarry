@@ -1,108 +1,102 @@
 package com.library.model;
 
+import resources.DatabaseConnection;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Scanner;
 
 public class Bibliotheque {
-    private List<Document> documents;
-    private List<Document> borrowedDocuments;
-    private HashMap<String, Document> titleMap;
-    private int idCounter = 1;
+    private Scanner scanner = new Scanner(System.in);
 
-    public Bibliotheque() {
-        this.documents = new ArrayList<>();
-        this.borrowedDocuments = new ArrayList<>();
-        this.titleMap = new HashMap<>();
-    }
 
-    public List<Document> getDocuments() {
-        return new ArrayList<>(documents);
-    }
+    public static void addLivre(Livre livre) {
 
-    public void ajouterLivre(String titre, String auteur, LocalDate datePublication, int nombreDePages, String isbn) {
-        Livre livre = new Livre(String.valueOf(generateId()), titre, auteur, datePublication, nombreDePages, isbn);
-        documents.add(livre);
-        titleMap.put(titre.toLowerCase(), livre);
-    }
+        String sql = "INSERT INTO Livre (titre, auteur, date_de_publication, nombre_de_pages, isbn) VALUES (?, ?, ?, ?, ?)";
 
-    public void ajouterMagazine(String titre, String auteur, LocalDate datePublication, int nombreDePages, String numero) {
-        Magazine magazine = new Magazine(String.valueOf(generateId()), titre, auteur, datePublication, nombreDePages, numero);
-        documents.add(magazine);
-        titleMap.put(titre.toLowerCase(), magazine);
-    }
+        try (Connection conn = DatabaseConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-    public void ajouterJournalScientifique(String titre, String auteur, LocalDate datePublication, int nombreDePages, String domaineRecherche) {
-        JournalScientifique journal = new JournalScientifique(String.valueOf(generateId()), titre, auteur, datePublication, nombreDePages, domaineRecherche);
-        documents.add(journal);
-        titleMap.put(titre.toLowerCase(), journal);
-    }
 
-    public void ajouterTheseUniversitaire(String titre, String auteur, LocalDate datePublication, int nombreDePages, String universite, String domaine) {
-        TheseUniversitaire these = new TheseUniversitaire(String.valueOf(generateId()), titre, auteur, datePublication, nombreDePages, universite, domaine);
-        documents.add(these);
-        titleMap.put(titre.toLowerCase(), these);
-    }
+            stmt.setString(1, livre.getTitre());
+            stmt.setString(2, livre.getAuteur());
+            stmt.setDate(3, Date.valueOf(livre.getDatePublication()));
+            stmt.setInt(4, livre.getNombreDePages());
 
-    public Document rechercherDocumentParTitre(String titre) {
-        return titleMap.get(titre.toLowerCase());
-    }
+            String isbn = livre.getIsbn();
 
-    public boolean supprimerDocument(String titre) {
-        Document document = rechercherDocumentParTitre(titre);
-        if (document != null) {
-            documents.remove(document);
-            titleMap.remove(titre.toLowerCase());
-            System.out.println("Document removed successfully.");
-        } else {
-            System.out.println("Document not found.");
-        }
-        return false;
-    }
-
-    public void afficherTousLesDocuments() {
-        if (documents.isEmpty()) {
-            System.out.println("No documents available in the library.");
-        } else {
-            System.out.println("************ All Documents in the Library ************");
-            for (Document doc : documents) {
-                doc.afficherDetails();
+            if (isbn.length() > 13) {
+                throw new IllegalArgumentException("L'ISBN dépasse la longueur maximale autorisée.");
             }
+            stmt.setString(5, isbn);
+
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+
+            System.err.println("Erreur lors de l'ajout du livre : " + e.getMessage());
+
+        }
+
+
+    }
+
+    public void addMagazine(String titre, String auteur, LocalDate datePublication, int nombrePages, String numero) {
+        String query = "INSERT INTO magazine (titre, auteur, date_publication, nombre_pages, numero) VALUES (?, ?, ?, ?, ?)";
+        try (Connection connection = DatabaseConnection.connect();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, titre);
+            statement.setString(2, auteur);
+            statement.setDate(3, java.sql.Date.valueOf(datePublication));
+            statement.setInt(4, nombrePages);
+            statement.setInt(5, Integer.parseInt(numero));
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
-    public void afficherDocumentsEmpruntes() {
-        if (borrowedDocuments.isEmpty()) {
-            System.out.println("No documents have been borrowed.");
-        } else {
-            for (Document doc : borrowedDocuments) {
-                doc.afficherDetails();
-            }
+    public void addJournalScientifique(String titre, String auteur, LocalDate datePublication, int nombrePages, String domaineRecherche) {
+        String query = "INSERT INTO journal_scientifique (titre, auteur, date_publication, nombre_pages, universite) VALUES (?, ?, ?, ?, ?)";
+        try (Connection connection = DatabaseConnection.connect();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, titre);
+            statement.setString(2, auteur);
+            statement.setDate(3, java.sql.Date.valueOf(datePublication));
+            statement.setInt(4, nombrePages);
+            statement.setString(5, domaineRecherche);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
-    public boolean emprunterDocumentParId(String id) {
-        for (Document doc : documents) {
-            if (doc.getId().equals(id)) {
-                documents.remove(doc);
-                borrowedDocuments.add(doc);
-                return true;
-            }
+    public void addTheseUniversitaire(String titre, String auteur, LocalDate datePublication, int nombrePages, String universite, String domaine) {
+        String query = "INSERT INTO these_universitaire (titre, auteur, date_publication, nombre_pages, universite, domaine) VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection connection = DatabaseConnection.connect();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, titre);
+            statement.setString(2, auteur);
+            statement.setDate(3, java.sql.Date.valueOf(datePublication));
+            statement.setInt(4, nombrePages);
+            statement.setString(5, universite);
+            statement.setString(6, domaine);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return false;
     }
 
-    public boolean retournerDocumentParId(String id) {
-        for (Document doc : borrowedDocuments) {
-            if (doc.getId().equals(id)) {
-                borrowedDocuments.remove(doc);
-                documents.add(doc);
-                return true;
-            }
+    private int getIntInput() {
+        while (!scanner.hasNextInt()) {
+            System.out.println("Please enter a valid number.");
+            scanner.next();
         }
-        return false;
+        return scanner.nextInt();
     }
 
-    private int generateId() {
-        return idCounter++;
-    }
+
 }

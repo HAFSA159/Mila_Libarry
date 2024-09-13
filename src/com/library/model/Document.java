@@ -6,10 +6,17 @@ public abstract class Document {
     private String id;
     private String titre;
     private String auteur;
-    protected LocalDate datePublication;  // Changed from private to protected
+    protected LocalDate datePublication;
 
-    public Document(String id, String titre, String auteur, LocalDate datePublication) {
+
+    public Document(String id,String titre, String auteur, LocalDate datePublication) {
         this.id = id;
+        this.titre = titre;
+        this.auteur = auteur;
+        this.datePublication = datePublication;
+    }
+    public Document(String titre, String auteur, LocalDate datePublication) {
+
         this.titre = titre;
         this.auteur = auteur;
         this.datePublication = datePublication;

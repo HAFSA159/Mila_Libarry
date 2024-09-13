@@ -7,8 +7,8 @@ public class TheseUniversitaire extends Document {
     private String universite;
     private String domaine;
 
-    public TheseUniversitaire(String id, String titre, String auteur, LocalDate datePublication, int nombreDePages, String universite, String domaine) {
-        super(id, titre, auteur, datePublication);  // Calling the parent constructor
+    public TheseUniversitaire(String titre, String auteur, LocalDate datePublication, int nombreDePages, String universite, String domaine) {
+        super(titre, auteur, datePublication);  // Calling the parent constructor
         this.nombreDePages = nombreDePages;
         this.universite = universite;
         this.domaine = domaine;

@@ -1,66 +1,54 @@
--- Create database
-CREATE DATABASE Library;
-
--- Connect to the database
-\c Library
-
--- Create parent tables
-CREATE TABLE document (
+CREATE TABLE Document (
     id SERIAL PRIMARY KEY,
     titre VARCHAR(255) NOT NULL,
-    auteur VARCHAR(255) NOT NULL,
-    annee_publication INT NOT NULL,
-    disponible BOOLEAN DEFAULT TRUE
+    auteur VARCHAR(255),
+    date_de_publication DATE,
+    nombre_de_pages INT,
+    etatDocument VARCHAR(50) DEFAULT 'disponible',
+    reserve BOOLEAN DEFAULT FALSE
 );
 
-CREATE TABLE utilisateur (
-    id SERIAL PRIMARY KEY,
-    nom VARCHAR(255) NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL
-);
 
--- Create child tables for documents
-CREATE TABLE livre (
-    isbn VARCHAR(20) UNIQUE NOT NULL,
-    nombre_pages INT NOT NULL,
-    emprunteur_id INT,
-    reservateur_id INT
-) INHERITS (document);
+CREATE TABLE JournalScientifique (
+    domaine_recherche VARCHAR(255) NOT NULL
+) INHERITS (Document);
 
-CREATE TABLE magazine (
-    numero INT NOT NULL
-) INHERITS (document);
 
-CREATE TABLE journal_scientifique (
-    universite VARCHAR(255) NOT NULL
-) INHERITS (document);
-
-CREATE TABLE these_universitaire (
+CREATE TABLE TheseUniversitaire (
     universite VARCHAR(255) NOT NULL,
     domaine VARCHAR(255) NOT NULL
-) INHERITS (document);
+) INHERITS (Document);
 
--- Create child tables for users
-CREATE TABLE etudiant (
-    niveau_etude VARCHAR(50) NOT NULL
-) INHERITS (utilisateur);
 
-CREATE TABLE professeur (
-    universite VARCHAR(255) NOT NULL
-) INHERITS (utilisateur);
+CREATE TABLE Livre (
+    isbn VARCHAR(13) UNIQUE NOT NULL
+) INHERITS (Document);
 
--- Create additional tables
-CREATE TABLE emprunt (
+
+CREATE TABLE Magazine (
+    numero VARCHAR(10) UNIQUE NOT NULL
+) INHERITS (Document);
+
+
+
+
+DROP TABLE IF EXISTS Magazine, Livre, TheseUniversitaire, JournalScientifique, Document CASCADE;
+
+
+
+CREATE TABLE Utilisateur (
     id SERIAL PRIMARY KEY,
-    document_id INT REFERENCES document(id),
-    utilisateur_id INT REFERENCES utilisateur(id),
-    date_emprunt DATE NOT NULL,
-    date_retour_prevue DATE NOT NULL
+    nom VARCHAR(255) NOT NULL,
+    prenom VARCHAR(255) UNIQUE NOT NULL
 );
 
-CREATE TABLE reservation (
-    id SERIAL PRIMARY KEY,
-    document_id INT REFERENCES document(id),
-    utilisateur_id INT REFERENCES utilisateur(id),
-    date_reservation DATE NOT NULL
-);
+
+
+CREATE TABLE Etudiant (
+    matricule VARCHAR(20) UNIQUE NOT NULL
+) INHERITS (Utilisateur);
+
+
+CREATE TABLE Professeur (
+    departement VARCHAR(255)
+) INHERITS (Utilisateur);
