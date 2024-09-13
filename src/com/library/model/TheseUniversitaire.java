@@ -73,4 +73,30 @@ public class TheseUniversitaire extends Document {
 
         DocumentDAO.ajouterTheseUniversitaire(theseUniversitaire);
     }
+
+    public static void updateTheseUniversitaire() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the ID of the Thèse Universitaire to update: ");
+        int id = InputValidator.getIntInput();
+
+        System.out.println("Enter new details for the Thèse Universitaire:");
+        System.out.print("Title: ");
+        String titre = scanner.nextLine();
+        System.out.print("Author: ");
+        String auteur = scanner.nextLine();
+        System.out.print("Publication Date (yyyy-mm-dd): ");
+        LocalDate datePublication = InputValidator.readDate();
+        System.out.print("Number of Pages: ");
+        int nombreDePages = InputValidator.getIntInput();
+        System.out.print("University: ");
+        String universite = scanner.nextLine();
+        System.out.print("Field: ");
+        String domaine = scanner.nextLine();
+
+        TheseUniversitaire theseUniversitaire = new TheseUniversitaire(titre, auteur, datePublication, nombreDePages, universite, domaine);
+        theseUniversitaire.setId(String.valueOf(id));
+
+        DocumentDAO.updateTheseUniversitaire(theseUniversitaire);
+    }
+
 }

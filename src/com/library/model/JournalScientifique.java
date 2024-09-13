@@ -61,4 +61,28 @@ public class JournalScientifique extends Document {
 
         DocumentDAO.ajouterJournalScientifique(journalScientifique);
     }
+
+    public static void updateJournalScientifique() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the ID of the Journal Scientifique to update: ");
+        int id = InputValidator.getIntInput();
+
+        System.out.println("Enter new details for the Journal Scientifique:");
+        System.out.print("Title: ");
+        String titre = scanner.nextLine();
+        System.out.print("Author: ");
+        String auteur = scanner.nextLine();
+        System.out.print("Publication Date (yyyy-mm-dd): ");
+        LocalDate datePublication = InputValidator.readDate();
+        System.out.print("Number of Pages: ");
+        int nombreDePages = InputValidator.getIntInput();
+        System.out.print("Domaine de Recherche: ");
+        String domaineRecherche = scanner.nextLine();
+
+        JournalScientifique journalScientifique = new JournalScientifique(titre, auteur, datePublication, nombreDePages, domaineRecherche);
+        journalScientifique.setId(String.valueOf(id));
+
+        DocumentDAO.updateJournalScientifique(journalScientifique);
+    }
+
 }

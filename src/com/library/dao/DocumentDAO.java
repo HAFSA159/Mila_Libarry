@@ -12,6 +12,8 @@ import java.sql.SQLException;
 
 public class DocumentDAO {
 
+    //ADD methods
+
     public static void ajouterLivre(Livre livre) {
         String query = "INSERT INTO livre (titre, auteur, date_de_publication, nombre_de_pages, isbn) " +
                 "VALUES (?, ?, ?, ?, ?)";
@@ -105,6 +107,8 @@ public class DocumentDAO {
         }
     }
 
+    //UPDATE methods
+
     public static void modifierLivre(Livre livre, int id) {
         String query = "UPDATE livre SET titre = ?, auteur = ?, date_de_publication = ?, nombre_de_pages = ?, isbn = ? " +
                 "WHERE id = ?";
@@ -132,5 +136,77 @@ public class DocumentDAO {
         }
     }
 
+    public static void updateMagazine(Magazine magazine) {
+        String query = "UPDATE magazine SET titre = ?, auteur = ?, date_de_publication = ?, nombre_de_pages = ?, numero = ? " +
+                "WHERE id = ?";
+
+        try (Connection conn = DatabaseConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, magazine.getTitre());
+            stmt.setString(2, magazine.getAuteur());
+            stmt.setDate(3, java.sql.Date.valueOf(magazine.getDatePublication()));
+            stmt.setInt(4, magazine.getNombreDePages());
+            stmt.setString(5, magazine.getNumero());
+            stmt.setInt(6, magazine.getId());
+
+            int rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Magazine updated successfully!");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error updating Magazine: " + e.getMessage());
+        }
+    }
+
+    public static void updateJournalScientifique(JournalScientifique journalScientifique) {
+        String query = "UPDATE journal_scientifique SET titre = ?, auteur = ?, date_de_publication = ?, nombre_de_pages = ?, domaine_recherche = ? " +
+                "WHERE id = ?";
+
+        try (Connection conn = DatabaseConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, journalScientifique.getTitre());
+            stmt.setString(2, journalScientifique.getAuteur());
+            stmt.setDate(3, java.sql.Date.valueOf(journalScientifique.getDatePublication()));
+            stmt.setInt(4, journalScientifique.getNombreDePages());
+            stmt.setString(5, journalScientifique.getDomaineRecherche());
+            stmt.setInt(6, journalScientifique.getId());
+
+            int rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Journal Scientifique updated successfully!");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error updating Journal Scientifique: " + e.getMessage());
+        }
+    }
+
+    public static void updateTheseUniversitaire(TheseUniversitaire theseUniversitaire) {
+        String query = "UPDATE these_universitaire SET titre = ?, auteur = ?, date_de_publication = ?, nombre_de_pages = ?, universite = ?, domaine = ? " +
+                "WHERE id = ?";
+
+        try (Connection conn = DatabaseConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, theseUniversitaire.getTitre());
+            stmt.setString(2, theseUniversitaire.getAuteur());
+            stmt.setDate(3, java.sql.Date.valueOf(theseUniversitaire.getDatePublication()));
+            stmt.setInt(4, theseUniversitaire.getNombreDePages());
+            stmt.setString(5, theseUniversitaire.getUniversite());
+            stmt.setString(6, theseUniversitaire.getDomaine());
+            stmt.setInt(7, theseUniversitaire.getId());
+
+            int rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Thèse Universitaire updated successfully!");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error updating Thèse Universitaire: " + e.getMessage());
+        }
+    }
 
 }

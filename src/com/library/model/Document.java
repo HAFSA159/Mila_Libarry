@@ -3,7 +3,7 @@ package com.library.model;
 import java.time.LocalDate;
 
 public abstract class Document {
-    private String id;
+    private int id;
     private String titre;
     private String auteur;
     protected LocalDate datePublication;
@@ -11,7 +11,7 @@ public abstract class Document {
 
 
     public Document(String id,String titre, String auteur, LocalDate datePublication) {
-        this.id = id;
+        this.id = Integer.parseInt(id);
         this.titre = titre;
         this.auteur = auteur;
         this.datePublication = datePublication;
@@ -24,12 +24,12 @@ public abstract class Document {
     }
 
     // Getter and Setter methods
-    public String getId() {
+    public int getId() {
         return id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.id = Integer.parseInt(id);
     }
 
     public String getTitre() {

@@ -54,4 +54,28 @@ public class Magazine extends Document {
         DocumentDAO.ajouterMagazine(magazine);
     }
 
+    public static void updateMagazine() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the ID of the Magazine to update: ");
+        int id = InputValidator.getIntInput();
+
+        System.out.println("Enter new details for the Magazine:");
+        System.out.print("Title: ");
+        String titre = scanner.nextLine();
+        System.out.print("Author: ");
+        String auteur = scanner.nextLine();
+        System.out.print("Publication Date (yyyy-mm-dd): ");
+        LocalDate datePublication = InputValidator.readDate();
+        System.out.print("Number of Pages: ");
+        int nombreDePages = InputValidator.getIntInput();
+        System.out.print("Number: ");
+        String numero = scanner.nextLine();
+
+        Magazine magazine = new Magazine(titre, auteur, datePublication, nombreDePages, numero);
+        magazine.setId(String.valueOf(id));
+
+        DocumentDAO.updateMagazine(magazine);
+    }
+
+
 }

@@ -68,10 +68,7 @@ public class Livre extends Document {
 
     }
 
-
-
-
-    public static void saisirEtModifierLivre() {
+    public static void updateLivre() {
         Scanner scanner = new Scanner(System.in);
 
         // Demander l'ID du livre à modifier
@@ -107,7 +104,6 @@ public class Livre extends Document {
         // Appeler la méthode pour modifier le livre dans la base de données
         DocumentDAO.modifierLivre(livre, id);
     }
-
 
 
 

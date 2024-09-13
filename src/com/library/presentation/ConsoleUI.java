@@ -73,36 +73,42 @@ public class ConsoleUI {
                     }
                     break;
                 case 2:
-                   // rechercherDocument();
+                    //rechercherDocument();
                     break;
                 case 3:
-                   // listerDocuments();
+                    //listerDocuments();
                     break;
                 case 4:
                     if ("Admin".equals(userRole)) {
-                        //supprimerDocument();
+                        updateDocument();
                     } else if ("Professeur".equals(userRole)) {
-                       // reserverDocument();
+                        //reserverDocument();
                     } else {
                         System.out.println("Option non disponible pour ce rôle.");
                     }
                     break;
                 case 5:
+                    if ("Admin".equals(userRole)) {
+                        deleteDocument();
+                    }
+                    break;
+                case 6:
                     System.out.println("Au revoir !");
                     break;
                 default:
                     System.out.println("Choix invalide. Veuillez réessayer.");
             }
 
-        } while (choix != 5);
+        } while (choix != 6);
     }
 
     private void afficherMenuAdmin() {
         System.out.println("1. Ajouter un document");
         System.out.println("2. Rechercher un document");
         System.out.println("3. Lister tous les documents");
-        System.out.println("4. Supprimer un document");
-        System.out.println("5. Quitter");
+        System.out.println("4. Mettre à jour un document");
+        System.out.println("5. Supprimer un document");
+        System.out.println("6. Quitter");
     }
 
     private void afficherMenuProfesseur() {
@@ -117,7 +123,8 @@ public class ConsoleUI {
         System.out.println("1. Emprunter un document");
         System.out.println("2. Rechercher un document");
         System.out.println("3. Lister tous les documents");
-        System.out.println("4. Quitter");
+        System.out.println("4. Réserver un document");
+        System.out.println("5. Quitter");
     }
 
     private void ajouterDocument() {
@@ -146,41 +153,55 @@ public class ConsoleUI {
         }
     }
 
-    /*private void emprunterDocument() {
-        System.out.println("=== Emprunter un Document ===");
-        System.out.print("Saisir le titre du document: ");
-        String titre = scanner.nextLine();
-        // Implement borrowing functionality here
-        bibliotheque.emprunterDocument(titre, userRole);
+    private void updateDocument() {
+        System.out.println("=== Mettre à jour un Document ===");
+        System.out.println("1. Mettre à jour un Livre");
+        System.out.println("2. Mettre à jour un Magazine");
+        System.out.println("3. Mettre à jour un Journal Scientifique");
+        System.out.println("4. Mettre à jour une Thèse Universitaire");
+        int choix = InputValidator.getIntInput();
+
+        switch (choix) {
+            case 1:
+                Livre.updateLivre();
+                break;
+            case 2:
+                Magazine.updateMagazine();
+                break;
+            case 3:
+                JournalScientifique.updateJournalScientifique();
+                break;
+            case 4:
+                TheseUniversitaire.updateTheseUniversitaire();
+                break;
+            default:
+                System.out.println("Choix invalide.");
+        }
     }
 
-    private void reserverDocument() {
-        System.out.println("=== Réserver un Document ===");
-        System.out.print("Saisir le titre du document: ");
-        String titre = scanner.nextLine();
-        // Implement reservation functionality here
-        bibliotheque.reserverDocument(titre, userRole);
-    }
-
-    private void rechercherDocument() {
-        System.out.println("=== Rechercher un Document ===");
-        System.out.print("Saisir le titre du document: ");
-        String titre = scanner.nextLine();
-        bibliotheque.rechercherDocumentParTitre(titre);  // Assuming the `Bibliotheque` class has this method.
-    }
-
-    private void listerDocuments() {
-        System.out.println("=== Liste des Documents ===");
-        bibliotheque.afficherTousLesDocuments();  // Assuming the `Bibliotheque` class has this method.
-    }
-
-    private void supprimerDocument() {
+    private void deleteDocument() {
         System.out.println("=== Supprimer un Document ===");
-        System.out.print("Saisir le titre du document à supprimer: ");
-        String titre = scanner.nextLine();
-        // Implement deletion functionality here
-        bibliotheque.supprimerDocument(titre);
-    }
+        System.out.println("1. Supprimer un Livre");
+        System.out.println("2. Supprimer un Magazine");
+        System.out.println("3. Supprimer un Journal Scientifique");
+        System.out.println("4. Supprimer une Thèse Universitaire");
+        int choix = InputValidator.getIntInput();
 
-     */
+        switch (choix) {
+            case 1:
+               // Livre.deleteLivre();
+                break;
+            case 2:
+                //Magazine.deleteMagazine();
+                break;
+            case 3:
+                //JournalScientifique.deleteJournalScientifique();
+                break;
+            case 4:
+                //TheseUniversitaire.deleteTheseUniversitaire();
+                break;
+            default:
+                System.out.println("Choix invalide.");
+        }
+    }
 }
