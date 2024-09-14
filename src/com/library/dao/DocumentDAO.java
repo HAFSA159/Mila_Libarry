@@ -10,8 +10,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public class DocumentDAO {
+    private static final Logger logger = Logger.getLogger(DocumentDAO.class.getName());
 
     //ADD methods
 
@@ -284,6 +286,44 @@ public class DocumentDAO {
 
             } catch (SQLException e) {
                 System.out.println("Erreur lors de la recherche du document : " + e.getMessage());
+            }
+        }
+    }
+
+    public static boolean borrowDocument(int id, String type) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            connection = DatabaseConnection.connect();
+
+            String checkQuery = "SELECT etatDocument FROM " + type + " WHERE id = ? AND etatDocument = 'disponible'";
+            ps = connection.prepareStatement(checkQuery);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String updateQuery = "UPDATE " + type + " SET etatDocument = 'emprunté' WHERE id = ?";
+                ps = connection.prepareStatement(updateQuery);
+                ps.setInt(1, id);
+                int rowsAffected = ps.executeUpdate();
+
+                return rowsAffected > 0;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
     }

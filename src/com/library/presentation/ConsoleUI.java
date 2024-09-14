@@ -70,7 +70,7 @@ public class ConsoleUI {
                     if ("Admin".equals(userRole)) {
                         addDocument();
                     } else {
-                        //borrowDocument();
+                        borrowDocument();
                     }
                     break;
                 case 2:
@@ -222,4 +222,46 @@ public class ConsoleUI {
 
         DocumentDAO.searchDocument(title);
     }
+
+    private void borrowDocument() {
+        System.out.println("=== Borrow a Document ===");
+        System.out.println("1. Borrow a Book");
+        System.out.println("2. Borrow a Magazine");
+        if ("Professor".equals(userRole)) {
+            System.out.println("3. Borrow a Scientific Journal");
+            System.out.println("4. Borrow a University Thesis");
+        }
+        int choice = InputValidator.getIntInput();
+
+        String documentType = "";
+        switch (choice) {
+            case 1:
+                documentType = "Livre";
+                break;
+            case 2:
+                documentType = "Magazine";
+                break;
+            case 3:
+                documentType = "JournalScientifique";
+                break;
+            case 4:
+                documentType = "TheseUniversitaire";
+                break;
+            default:
+                System.out.println("Invalid choice.");
+                return;
+        }
+
+        System.out.print("Enter the ID of the document to borrow: ");
+        int documentId = InputValidator.getIntInput();
+
+        // Call the method to borrow the document from the DAO
+        boolean success = DocumentDAO.borrowDocument(documentId, documentType);
+        if (success) {
+            System.out.println("Document successfully borrowed.");
+        } else {
+            System.out.println("Failed to borrow the document. Please check the ID and try again.");
+        }
+    }
+
 }
