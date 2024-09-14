@@ -2,8 +2,19 @@ package com.library.model;
 
 public class Etudiant extends Utilisateur {
 
-    public Etudiant(int id, String nom, String email) {
-        super(id, nom, email);
+    private String matricule;
+
+    public Etudiant(int id, String nom, String prenom, String matricule) {
+        super(id, nom, prenom);
+        this.matricule = matricule;
+    }
+
+    public String getMatricule() {
+        return matricule;
+    }
+
+    public void setMatricule(String matricule) {
+        this.matricule = matricule;
     }
 
     @Override
@@ -18,6 +29,8 @@ public class Etudiant extends Utilisateur {
 
     @Override
     public String toString() {
-        return super.toString() + ", Etudiant{}";
+        return super.toString() + ", Etudiant{" +
+                "matricule='" + matricule + '\'' +
+                '}';
     }
 }

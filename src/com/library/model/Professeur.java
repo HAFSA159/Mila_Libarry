@@ -1,9 +1,19 @@
 package com.library.model;
 
 public class Professeur extends Utilisateur {
+    private String departement;
 
-    public Professeur(int id, String nom, String email) {
-        super(id, nom, email);
+    public Professeur(int id, String nom, String prenom, String departement) {
+        super(id, nom, prenom);
+        this.departement = departement;
+    }
+
+    public String getDepartement() {
+        return departement;
+    }
+
+    public void setDepartement(String departement) {
+        this.departement = departement;
     }
 
     @Override
@@ -18,6 +28,8 @@ public class Professeur extends Utilisateur {
 
     @Override
     public String toString() {
-        return super.toString() + ", Professeur{}";
+        return super.toString() + ", Professeur{" +
+                "departement='" + departement + '\'' +
+                '}';
     }
 }

@@ -1,18 +1,22 @@
 package com.library.model;
 
 public abstract class Utilisateur {
-    protected int id;
+    public int id;
     protected String nom;
-    protected String email;
+    protected String prenom;
 
-    public Utilisateur(int id, String nom, String email) {
+    public Utilisateur(int id, String nom, String prenom) {
         this.id = id;
         this.nom = formatNom(nom);
-        this.email = email;
+        this.prenom = prenom;
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNom() {
@@ -23,8 +27,12 @@ public abstract class Utilisateur {
         this.nom = formatNom(nom);
     }
 
-    public String getEmail() {
-        return email;
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
     }
 
     public abstract String getType();
@@ -36,7 +44,7 @@ public abstract class Utilisateur {
         return "Utilisateur{" +
                 "id=" + id +
                 ", nom='" + nom + '\'' +
-                ", email='" + email + '\'' +
+                ", prenom='" + prenom + '\'' +
                 '}';
     }
 
@@ -57,4 +65,5 @@ public abstract class Utilisateur {
 
         return formattedName.toString().trim();
     }
+
 }

@@ -30,19 +30,11 @@ CREATE TABLE Magazine (
 ) INHERITS (Document);
 
 
-
-
-DROP TABLE IF EXISTS Magazine, Livre, TheseUniversitaire, JournalScientifique, Document CASCADE;
-
-
-
 CREATE TABLE Utilisateur (
     id SERIAL PRIMARY KEY,
     nom VARCHAR(255) NOT NULL,
     prenom VARCHAR(255) UNIQUE NOT NULL
 );
-
-
 
 CREATE TABLE Etudiant (
     matricule VARCHAR(20) UNIQUE NOT NULL
