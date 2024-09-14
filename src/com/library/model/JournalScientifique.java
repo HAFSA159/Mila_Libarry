@@ -41,7 +41,7 @@ public class JournalScientifique extends Document {
         System.out.println("Domaine de Recherche: " + domaineRecherche);
     }
 
-    public static void enterJournalScientifique() {
+    public static void enterScientificJournal() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter details for Journal Scientifique:");
         System.out.print("Title: ");
@@ -59,10 +59,10 @@ public class JournalScientifique extends Document {
                 journalTitre, journalAuteur, journalDatePublication, journalNombreDePages, domaineRecherche
         );
 
-        DocumentDAO.ajouterJournalScientifique(journalScientifique);
+        DocumentDAO.addScientificJournal(journalScientifique);
     }
 
-    public static void updateJournalScientifique() {
+    public static void updateScientificJournal() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the ID of the Journal Scientifique to update: ");
         int id = InputValidator.getIntInput();

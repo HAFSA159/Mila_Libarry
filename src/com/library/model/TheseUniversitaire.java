@@ -53,7 +53,7 @@ public class TheseUniversitaire extends Document {
         System.out.println("Domaine: " + domaine);
     }
 
-    public static void enterTheseUniversitaire() {
+    public static void enterUniversityThesis() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter details for Thèse Universitaire:");
         System.out.print("Title: ");
@@ -71,10 +71,10 @@ public class TheseUniversitaire extends Document {
 
         TheseUniversitaire theseUniversitaire = new TheseUniversitaire(theseTitre, theseAuteur, theseDatePublication, theseNombreDePages, universite, domaine);
 
-        DocumentDAO.ajouterTheseUniversitaire(theseUniversitaire);
+        DocumentDAO.addUniversityThesis(theseUniversitaire);
     }
 
-    public static void updateTheseUniversitaire() {
+    public static void updateUniversityThesis() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the ID of the Thèse Universitaire to update: ");
         int id = InputValidator.getIntInput();

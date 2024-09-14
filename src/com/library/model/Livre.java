@@ -24,7 +24,6 @@ public class Livre extends Document {
     }
 
 
-    // Getter and Setter methods
     public int getNombreDePages() {
         return nombreDePages;
     }
@@ -46,7 +45,7 @@ public class Livre extends Document {
 
     }
 
-    public static void enterLivre(){
+    public static void enterBook(){
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter details for Livre:");
@@ -64,27 +63,24 @@ public class Livre extends Document {
         Livre livre = new Livre(livreTitre,livreAuteur,livreDatePublication,livreNombreDePages,isbn);
 
 
-        DocumentDAO.ajouterLivre(livre);
+        DocumentDAO.addBook(livre);
 
     }
 
-    public static void updateLivre() {
+    public static void updateBook() {
         Scanner scanner = new Scanner(System.in);
 
-        // Demander l'ID du livre à modifier
         System.out.print("Saisir l'ID du livre à modifier : ");
         int id;
         try {
-            id = Integer.parseInt(scanner.nextLine()); // Convertir l'ID en entier
+            id = Integer.parseInt(scanner.nextLine());
         } catch (NumberFormatException e) {
             System.out.println("L'ID doit être un entier valide.");
-            return; // Arrêter l'exécution si l'ID n'est pas valide
+            return;
         }
 
-        // Créer un nouvel objet Livre pour la modification
         Livre livre = new Livre();
 
-        // Saisir les nouvelles informations pour le livre
         System.out.print("Saisir le nouveau titre : ");
         livre.setTitre(scanner.nextLine());
 
@@ -96,12 +92,11 @@ public class Livre extends Document {
 
         System.out.print("Saisir le nouveau nombre de pages : ");
         livre.setNombreDePages(scanner.nextInt());
-        scanner.nextLine(); // Consommer la nouvelle ligne restante
+        scanner.nextLine();
 
         System.out.print("Saisir le nouvel ISBN : ");
         livre.setIsbn(scanner.nextLine());
 
-        // Appeler la méthode pour modifier le livre dans la base de données
         DocumentDAO.updateLivre(livre, id);
     }
 

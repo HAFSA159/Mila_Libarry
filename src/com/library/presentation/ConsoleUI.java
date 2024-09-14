@@ -20,72 +20,72 @@ public class ConsoleUI {
     }
 
     public void startMenu() {
-        afficherMenuRole();
-        afficherMenuPrincipal();
+        displayRoleMenu();
+        displayMainMenu();
     }
 
-    private void afficherMenuRole() {
-        System.out.println("=== Sélection du Rôle ===");
+    private void displayRoleMenu() {
+        System.out.println("=== Select Role ===");
         System.out.println("1. Admin");
-        System.out.println("2. Étudiant");
-        System.out.println("3. Professeur");
-        System.out.print("Choisissez votre rôle: ");
-        int choix = InputValidator.getIntInput();
+        System.out.println("2. Student");
+        System.out.println("3. Professor");
+        System.out.print("Choose your role: ");
+        int choice = InputValidator.getIntInput();
 
-        switch (choix) {
+        switch (choice) {
             case 1:
                 userRole = "Admin";
                 break;
             case 2:
-                userRole = "Étudiant";
+                userRole = "Student";
                 break;
             case 3:
-                userRole = "Professeur";
+                userRole = "Professor";
                 break;
             default:
-                System.out.println("Choix invalide. Par défaut, vous êtes considéré comme Étudiant.");
-                userRole = "Étudiant";
+                System.out.println("Invalid choice. Defaulting to Student.");
+                userRole = "Student";
         }
     }
 
-    private void afficherMenuPrincipal() {
-        int choix;
+    private void displayMainMenu() {
+        int choice;
 
         do {
-            System.out.println("=== Menu Principal (" + userRole + ") ===");
+            System.out.println("=== Main Menu (" + userRole + ") ===");
 
             if ("Admin".equals(userRole)) {
-                afficherMenuAdmin();
-            } else if ("Professeur".equals(userRole)) {
-                afficherMenuProfesseur();
+                displayAdminMenu();
+            } else if ("Professor".equals(userRole)) {
+                displayProfessorMenu();
             } else {
-                afficherMenuEtudiant();
+                displayStudentMenu();
             }
 
-            System.out.print("Choisissez une option: ");
-            choix = InputValidator.getIntInput();
+            System.out.print("Choose an option: ");
+            choice = InputValidator.getIntInput();
 
-            switch (choix) {
+            switch (choice) {
                 case 1:
                     if ("Admin".equals(userRole)) {
-                        ajouterDocument();
+                        addDocument();
                     } else {
-                        //emprunterDocument();
+                        //borrowDocument();
                     }
                     break;
                 case 2:
-                    rechercherDocument();
+                    searchDocument();
                     break;
                 case 3:
-                    //listerDocuments();
+                    //listDocuments();
                     break;
                 case 4:
                     if ("Admin".equals(userRole)) {
                         updateDocument();
-                    } else if ("Professeur".equals(userRole)) {
-                        //reserverDocument();
+                    } else if ("Professor".equals(userRole)) {
+                        //reserveDocument();
                     } else {
-                        System.out.println("Option non disponible pour ce rôle.");
+                        System.out.println("Option not available for this role.");
                     }
                     break;
                 case 5:
@@ -94,134 +94,132 @@ public class ConsoleUI {
                     }
                     break;
                 case 6:
-                    System.out.println("Au revoir !");
+                    System.out.println("Goodbye!");
                     break;
                 default:
-                    System.out.println("Choix invalide. Veuillez réessayer.");
+                    System.out.println("Invalid choice. Please try again.");
             }
 
-        } while (choix != 6);
+        } while (choice != 6);
     }
 
-    private void afficherMenuAdmin() {
-        System.out.println("1. Ajouter un document");
-        System.out.println("2. Rechercher un document");
-        System.out.println("3. Lister tous les documents");
-        System.out.println("4. Mettre à jour un document");
-        System.out.println("5. Supprimer un document");
-        System.out.println("6. Quitter");
+    private void displayAdminMenu() {
+        System.out.println("1. Add a document");
+        System.out.println("2. Search for a document");
+        System.out.println("3. List all documents");
+        System.out.println("4. Update a document");
+        System.out.println("5. Delete a document");
+        System.out.println("6. Exit");
     }
 
-    private void afficherMenuProfesseur() {
-        System.out.println("1. Emprunter un document");
-        System.out.println("2. Rechercher un document");
-        System.out.println("3. Lister tous les documents");
-        System.out.println("4. Réserver un document");
-        System.out.println("5. Quitter");
+    private void displayProfessorMenu() {
+        System.out.println("1. Borrow a document");
+        System.out.println("2. Search for a document");
+        System.out.println("3. List all documents");
+        System.out.println("4. Reserve a document");
+        System.out.println("5. Exit");
     }
 
-    private void afficherMenuEtudiant() {
-        System.out.println("1. Emprunter un document");
-        System.out.println("2. Rechercher un document");
-        System.out.println("3. Lister tous les documents");
-        System.out.println("4. Réserver un document");
-        System.out.println("5. Quitter");
+    private void displayStudentMenu() {
+        System.out.println("1. Borrow a document");
+        System.out.println("2. Search for a document");
+        System.out.println("3. List all documents");
+        System.out.println("4. Reserve a document");
+        System.out.println("5. Exit");
     }
 
-    private void ajouterDocument() {
-        System.out.println("=== Ajouter un Document ===");
-        System.out.println("1. Ajouter un Livre");
-        System.out.println("2. Ajouter un Magazine");
-        System.out.println("3. Ajouter un Journal Scientifique");
-        System.out.println("4. Ajouter une Thèse Universitaire");
-        int choix = InputValidator.getIntInput();
+    //CRUD DOC
 
-        switch (choix) {
+    private void addDocument() {
+        System.out.println("=== Add a Document ===");
+        System.out.println("1. Add a Book");
+        System.out.println("2. Add a Magazine");
+        System.out.println("3. Add a Scientific Journal");
+        System.out.println("4. Add a University Thesis");
+        int choice = InputValidator.getIntInput();
+
+        switch (choice) {
             case 1:
-                Livre.enterLivre();
+                Livre.enterBook();
                 break;
             case 2:
                 Magazine.enterMagazine();
                 break;
             case 3:
-                JournalScientifique.enterJournalScientifique();
+                JournalScientifique.enterScientificJournal();
                 break;
             case 4:
-                TheseUniversitaire.enterTheseUniversitaire();
+                TheseUniversitaire.enterUniversityThesis();
                 break;
             default:
-                System.out.println("Choix invalide.");
+                System.out.println("Invalid choice.");
         }
     }
 
     private void updateDocument() {
-        System.out.println("=== Mettre à jour un Document ===");
-        System.out.println("1. Mettre à jour un Livre");
-        System.out.println("2. Mettre à jour un Magazine");
-        System.out.println("3. Mettre à jour un Journal Scientifique");
-        System.out.println("4. Mettre à jour une Thèse Universitaire");
-        int choix = InputValidator.getIntInput();
+        System.out.println("=== Update a Document ===");
+        System.out.println("1. Update a Book");
+        System.out.println("2. Update a Magazine");
+        System.out.println("3. Update a Scientific Journal");
+        System.out.println("4. Update a University Thesis");
+        int choice = InputValidator.getIntInput();
 
-        switch (choix) {
+        switch (choice) {
             case 1:
-                Livre.updateLivre();
+                Livre.updateBook();
                 break;
             case 2:
                 Magazine.updateMagazine();
                 break;
             case 3:
-                JournalScientifique.updateJournalScientifique();
+                JournalScientifique.updateScientificJournal();
                 break;
             case 4:
-                TheseUniversitaire.updateTheseUniversitaire();
+                TheseUniversitaire.updateUniversityThesis();
                 break;
             default:
-                System.out.println("Choix invalide.");
+                System.out.println("Invalid choice.");
         }
     }
 
     private void deleteDocument() {
-        System.out.println("=== Supprimer un Document ===");
-        System.out.println("1. Supprimer un Livre");
-        System.out.println("2. Supprimer un Magazine");
-        System.out.println("3. Supprimer un Journal Scientifique");
-        System.out.println("4. Supprimer une Thèse Universitaire");
-        int choix = InputValidator.getIntInput();
+        System.out.println("=== Delete a Document ===");
+        System.out.println("1. Delete a Book");
+        System.out.println("2. Delete a Magazine");
+        System.out.println("3. Delete a Scientific Journal");
+        System.out.println("4. Delete a University Thesis");
+        int choice = InputValidator.getIntInput();
 
         String type = "";
-        switch (choix) {
+        switch (choice) {
             case 1:
-                type = "livre";
+                type = "book";
                 break;
             case 2:
                 type = "magazine";
                 break;
             case 3:
-                type = "journal_scientifique";
+                type = "scientific_journal";
                 break;
             case 4:
-                type = "these_universitaire";
+                type = "university_thesis";
                 break;
             default:
-                System.out.println("Choix invalide.");
+                System.out.println("Invalid choice.");
                 return;
         }
 
-        System.out.print("Entrez l'ID du document à supprimer: ");
+        System.out.print("Enter the ID of the document to delete: ");
         int id = InputValidator.getIntInput();
 
-        DocumentDAO.supprimerDocument(id, type);
+        DocumentDAO.deleteDocument(id, type);
     }
 
-    private void rechercherDocument() {
-        System.out.println("=== Rechercher un Document ===");
-        System.out.print("Entrez le titre du document à rechercher: ");
-        String titre = scanner.nextLine();
+    private void searchDocument() {
+        System.out.println("=== Search for a Document ===");
+        System.out.print("Enter the title of the document to search for: ");
+        String title = scanner.nextLine();
 
-        DocumentDAO.rechercherDocument(titre);
+        DocumentDAO.searchDocument(title);
     }
-
-
-
-
 }

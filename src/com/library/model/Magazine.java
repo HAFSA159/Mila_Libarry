@@ -51,7 +51,7 @@ public class Magazine extends Document {
 
         Magazine magazine = new Magazine(magazineTitre, magazineAuteur, magazineDatePublication, magazineNombreDePages, numero);
 
-        DocumentDAO.ajouterMagazine(magazine);
+        DocumentDAO.addMagazine(magazine);
     }
 
     public static void updateMagazine() {

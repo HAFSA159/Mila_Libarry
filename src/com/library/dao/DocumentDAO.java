@@ -15,7 +15,7 @@ public class DocumentDAO {
 
     //ADD methods
 
-    public static void ajouterLivre(Livre livre) {
+    public static void addBook(Livre livre) {
         String query = "INSERT INTO livre (titre, auteur, date_de_publication, nombre_de_pages, isbn) " +
                 "VALUES (?, ?, ?, ?, ?)";
 
@@ -38,7 +38,7 @@ public class DocumentDAO {
         }
     }
 
-    public static void ajouterMagazine(Magazine magazine) {
+    public static void addMagazine(Magazine magazine) {
         String query = "INSERT INTO magazine (titre, auteur, date_de_publication, nombre_de_pages, numero) " +
                 "VALUES (?, ?, ?, ?, ?)";
 
@@ -61,7 +61,7 @@ public class DocumentDAO {
         }
     }
 
-    public static void ajouterJournalScientifique(JournalScientifique journalScientifique) {
+    public static void addScientificJournal(JournalScientifique journalScientifique) {
         String query = "INSERT INTO journalscientifique (titre, auteur, date_de_publication, nombre_de_pages, domaine_recherche) " +
                 "VALUES (?, ?, ?, ?, ?)";
 
@@ -84,7 +84,7 @@ public class DocumentDAO {
         }
     }
 
-    public static void ajouterTheseUniversitaire(TheseUniversitaire theseUniversitaire) {
+    public static void addUniversityThesis(TheseUniversitaire theseUniversitaire) {
         String query = "INSERT INTO theseuniversitaire (titre, auteur, date_de_publication, nombre_de_pages, universite, domaine) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -212,7 +212,7 @@ public class DocumentDAO {
 
     //DELETE methods
 
-    public static void supprimerDocument(int id, String type) {
+    public static void deleteDocument(int id, String type) {
         String query;
 
         switch (type.toLowerCase()) {
@@ -250,7 +250,7 @@ public class DocumentDAO {
         }
     }
 
-    public static void rechercherDocument(String titre) {
+    public static void searchDocument(String titre) {
         String[] types = {"livre", "magazine", "journalscientifique", "theseuniversitaire"};
 
         for (String type : types) {

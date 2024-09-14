@@ -6,8 +6,6 @@ import java.util.Scanner;
 public class InputValidator {
 
 
-
-
     public static int getIntInput() {
          Scanner scanner = new Scanner(System.in);
         while (true) {
