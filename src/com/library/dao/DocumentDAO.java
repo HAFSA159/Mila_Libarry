@@ -4,17 +4,14 @@ import com.library.model.JournalScientifique;
 import com.library.model.Livre;
 import com.library.model.Magazine;
 import com.library.model.TheseUniversitaire;
-import com.library.utilitaire.InputValidator;
 import resources.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Logger;
 
 public class DocumentDAO {
-    private static final Logger logger = Logger.getLogger(DocumentDAO.class.getName());
 
     //ADD methods
 
@@ -378,25 +375,9 @@ public class DocumentDAO {
         return false;
     }
 
-    public static boolean isReserved(int documentId) {
-        Connection connection = DatabaseConnection.connect();
-        String query = "SELECT reserve FROM document WHERE id = ?";
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setInt(1, documentId);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return rs.getBoolean("reserve");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
     public static boolean returnDocument(int documentId) {
         Connection connection = DatabaseConnection.connect();
 
-        // Check if the document is reserved
         String checkReservedQuery = "SELECT reserve, user_id_reserve FROM Document WHERE id = ?";
         try (PreparedStatement checkPs = connection.prepareStatement(checkReservedQuery)) {
             checkPs.setInt(1, documentId);
@@ -409,10 +390,8 @@ public class DocumentDAO {
                 // Update document status
                 String updateQuery;
                 if (isReserved) {
-                    // If reserved, make it available and assign it to the reserved user
                     updateQuery = "UPDATE Document SET etatDocument = 'emprunté', reserve = FALSE, user_id_reserve = NULL WHERE id = ?";
                 } else {
-                    // If not reserved, just make it available
                     updateQuery = "UPDATE Document SET etatDocument = 'disponible' WHERE id = ?";
                 }
 
@@ -420,11 +399,8 @@ public class DocumentDAO {
                     updatePs.setInt(1, documentId);
                     int rowsAffected = updatePs.executeUpdate();
 
-                    // If the document was reserved, handle the reservation
                     if (isReserved) {
-                        // Optionally, update a records table or notify the user
                         System.out.println("Document was reserved by user ID: " + reservedBy);
-                        // Notify reserved user or handle next steps for reservation
                     }
 
                     return rowsAffected > 0;

@@ -4,13 +4,7 @@ import com.library.dao.DocumentDAO;
 import com.library.dao.UtilisateurDAO;
 import com.library.model.*;
 import com.library.utilitaire.InputValidator;
-import resources.DatabaseConnection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
@@ -113,7 +107,7 @@ public class ConsoleUI {
                     System.out.println("Invalid choice. Please try again.");
             }
 
-        } while (choice != 6);
+        } while (true);
     }
 
     private void displayAdminMenu() {
@@ -334,7 +328,6 @@ public class ConsoleUI {
         System.out.print("Enter your User ID: ");
         int userId = InputValidator.getIntInput();
 
-        // Reserve the document
         boolean success = DocumentDAO.reserveDocument(documentId, documentType, userId);
 
         if (success) {
