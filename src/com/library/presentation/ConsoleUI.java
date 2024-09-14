@@ -1,5 +1,6 @@
 package com.library.presentation;
 
+import com.library.dao.DocumentDAO;
 import com.library.model.Bibliotheque;
 import com.library.model.Livre;
 import com.library.model.Magazine;
@@ -73,7 +74,7 @@ public class ConsoleUI {
                     }
                     break;
                 case 2:
-                    //rechercherDocument();
+                    rechercherDocument();
                     break;
                 case 3:
                     //listerDocuments();
@@ -187,21 +188,40 @@ public class ConsoleUI {
         System.out.println("4. Supprimer une Thèse Universitaire");
         int choix = InputValidator.getIntInput();
 
+        String type = "";
         switch (choix) {
             case 1:
-               // Livre.deleteLivre();
+                type = "livre";
                 break;
             case 2:
-                //Magazine.deleteMagazine();
+                type = "magazine";
                 break;
             case 3:
-                //JournalScientifique.deleteJournalScientifique();
+                type = "journal_scientifique";
                 break;
             case 4:
-                //TheseUniversitaire.deleteTheseUniversitaire();
+                type = "these_universitaire";
                 break;
             default:
                 System.out.println("Choix invalide.");
+                return;
         }
+
+        System.out.print("Entrez l'ID du document à supprimer: ");
+        int id = InputValidator.getIntInput();
+
+        DocumentDAO.supprimerDocument(id, type);
     }
+
+    private void rechercherDocument() {
+        System.out.println("=== Rechercher un Document ===");
+        System.out.print("Entrez le titre du document à rechercher: ");
+        String titre = scanner.nextLine();
+
+        DocumentDAO.rechercherDocument(titre);
+    }
+
+
+
+
 }

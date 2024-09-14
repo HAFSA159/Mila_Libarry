@@ -102,7 +102,7 @@ public class Livre extends Document {
         livre.setIsbn(scanner.nextLine());
 
         // Appeler la méthode pour modifier le livre dans la base de données
-        DocumentDAO.modifierLivre(livre, id);
+        DocumentDAO.updateLivre(livre, id);
     }
 
 

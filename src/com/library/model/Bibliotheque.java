@@ -6,5 +6,4 @@ public class Bibliotheque {
 
     private Scanner scanner = new Scanner(System.in);
 
-
 }

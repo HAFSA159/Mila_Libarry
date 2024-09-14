@@ -8,6 +8,7 @@ import resources.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DocumentDAO {
@@ -109,7 +110,7 @@ public class DocumentDAO {
 
     //UPDATE methods
 
-    public static void modifierLivre(Livre livre, int id) {
+    public static void updateLivre(Livre livre, int id) {
         String query = "UPDATE livre SET titre = ?, auteur = ?, date_de_publication = ?, nombre_de_pages = ?, isbn = ? " +
                 "WHERE id = ?";
 
@@ -206,6 +207,84 @@ public class DocumentDAO {
 
         } catch (SQLException e) {
             System.out.println("Error updating Thèse Universitaire: " + e.getMessage());
+        }
+    }
+
+    //DELETE methods
+
+    public static void supprimerDocument(int id, String type) {
+        String query;
+
+        switch (type.toLowerCase()) {
+            case "livre":
+                query = "DELETE FROM livre WHERE id = ?";
+                break;
+            case "magazine":
+                query = "DELETE FROM magazine WHERE id = ?";
+                break;
+            case "journal scientifique":
+                query = "DELETE FROM journalscientifique WHERE id = ?";
+                break;
+            case "these universitaire":
+                query = "DELETE FROM theseuniversitaire WHERE id = ?";
+                break;
+            default:
+                System.out.println("Type de document invalide.");
+                return;
+        }
+
+        try (Connection conn = DatabaseConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, id);
+            int rowsDeleted = stmt.executeUpdate();
+
+            if (rowsDeleted > 0) {
+                System.out.println("Document supprimé avec succès !");
+            } else {
+                System.out.println("Aucun document trouvé avec cet ID.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la suppression du document : " + e.getMessage());
+        }
+    }
+
+    public static void rechercherDocument(String titre) {
+        String[] types = {"livre", "magazine", "journalscientifique", "theseuniversitaire"};
+
+        for (String type : types) {
+            String query = "SELECT * FROM " + type + " WHERE titre LIKE ?";
+
+            try (Connection conn = DatabaseConnection.connect();
+                 PreparedStatement stmt = conn.prepareStatement(query)) {
+
+                stmt.setString(1, "%" + titre + "%");
+                ResultSet rs = stmt.executeQuery();
+
+                while (rs.next()) {
+                    // Adjust this based on your actual table schema
+                    System.out.println("ID: " + rs.getInt("id"));
+                    System.out.println("Titre: " + rs.getString("titre"));
+                    System.out.println("Auteur: " + rs.getString("auteur"));
+                    System.out.println("Date de Publication: " + rs.getDate("date_de_publication"));
+                    System.out.println("Nombre de Pages: " + rs.getInt("nombre_de_pages"));
+                    if (type.equals("livre")) {
+                        System.out.println("ISBN: " + rs.getString("isbn"));
+                    } else if (type.equals("magazine")) {
+                        System.out.println("Numéro: " + rs.getString("numero"));
+                    } else if (type.equals("journalscientifique")) {
+                        System.out.println("Domaine de Recherche: " + rs.getString("domaine_recherche"));
+                    } else if (type.equals("theseuniversitaire")) {
+                        System.out.println("Université: " + rs.getString("universite"));
+                        System.out.println("Domaine: " + rs.getString("domaine"));
+                    }
+                    System.out.println();
+                }
+
+            } catch (SQLException e) {
+                System.out.println("Erreur lors de la recherche du document : " + e.getMessage());
+            }
         }
     }
 
