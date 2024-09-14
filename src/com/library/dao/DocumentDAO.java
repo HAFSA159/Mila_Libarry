@@ -4,6 +4,7 @@ import com.library.model.JournalScientifique;
 import com.library.model.Livre;
 import com.library.model.Magazine;
 import com.library.model.TheseUniversitaire;
+import com.library.utilitaire.InputValidator;
 import resources.DatabaseConnection;
 
 import java.sql.Connection;
@@ -327,6 +328,41 @@ public class DocumentDAO {
             }
         }
     }
+
+    public static boolean isAvailable(int documentId, String documentType) {
+        Connection connection = DatabaseConnection.connect();
+        String query = "SELECT reserved FROM " + documentType + " WHERE id = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, documentId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return !rs.getBoolean("reserved");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean reserveDocument(int documentId, String documentType, int userId) {
+        Connection connection = DatabaseConnection.connect();
+        String updateQuery = "UPDATE " + documentType + " SET reserve = ?, user_id_reserve = ? WHERE id = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(updateQuery)) {
+            ps.setBoolean(1, true);
+            ps.setInt(2, userId);
+            ps.setInt(3, documentId);
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 
 
 

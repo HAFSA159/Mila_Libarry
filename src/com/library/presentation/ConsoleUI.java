@@ -85,11 +85,8 @@ public class ConsoleUI {
                 case 3:
                     if ("Admin".equals(userRole)) {
                         updateDocument();
-                    } else if ("Professor".equals(userRole)) {
-                        //reserveDocument();
-                    } else {
-                        System.out.println("Option not available for this role.");
-                    }
+                    } else
+                        reserveDocument();
                     break;
 
                 case 4:
@@ -272,6 +269,72 @@ public class ConsoleUI {
         }
     }
 
+    // Reserve the document
+
+    private void reserveDocument() {
+        System.out.println("=== Reserve a Document ===");
+        System.out.println("1. Reserve a Book");
+        System.out.println("2. Reserve a Magazine");
+
+        if ("Professor".equals(userRole)) {
+            System.out.println("3. Reserve a Scientific Journal");
+            System.out.println("4. Reserve a University Thesis");
+        }
+
+        int choice = InputValidator.getIntInput();
+        String documentType = "";
+
+        switch (choice) {
+            case 1:
+                documentType = "Livre";
+                break;
+            case 2:
+                documentType = "Magazine";
+                break;
+            case 3:
+                if ("Professor".equals(userRole)) {
+                    documentType = "JournalScientifique";
+                    break;
+                } else {
+                    System.out.println("You don't have access to reserve a Scientific Journal.");
+                    return;
+                }
+            case 4:
+                if ("Professor".equals(userRole)) {
+                    documentType = "TheseUniversitaire";
+                    break;
+                } else {
+                    System.out.println("You don't have access to reserve a University Thesis.");
+                    return;
+                }
+            default:
+                System.out.println("Invalid choice.");
+                return;
+        }
+
+        System.out.print("Enter the ID of the document to reserve: ");
+        int documentId = InputValidator.getIntInput();
+
+        boolean isAvailable = DocumentDAO.isAvailable(documentId, documentType);
+
+        if (!isAvailable) {
+            System.out.println("This document is already reserved or not available.");
+            return;
+        }
+
+        System.out.print("Enter your User ID: ");
+        int userId = InputValidator.getIntInput();
+
+        // Reserve the document
+        boolean success = DocumentDAO.reserveDocument(documentId, documentType, userId);
+
+        if (success) {
+            System.out.println("Document successfully reserved.");
+        } else {
+            System.out.println("Failed to reserve the document. Please check the document ID and try again.");
+        }
+    }
+
     // CRUD For User
 
     private void manageUsers() {
@@ -365,7 +428,6 @@ public class ConsoleUI {
         }
     }
 
-
     private void updateUser() {
         System.out.println("=== Update User ===");
         System.out.print("Enter user's ID: ");
@@ -443,7 +505,6 @@ public class ConsoleUI {
             System.out.println("Failed to update Professeur.");
         }
     }
-
 
     private void deleteUser() {
         System.out.println("=== Delete User ===");

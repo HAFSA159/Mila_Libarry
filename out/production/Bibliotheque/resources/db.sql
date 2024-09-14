@@ -5,7 +5,8 @@ CREATE TABLE Document (
     date_de_publication DATE,
     nombre_de_pages INT,
     etatDocument VARCHAR(50) DEFAULT 'disponible',
-    reserve BOOLEAN DEFAULT FALSE
+    reserve BOOLEAN DEFAULT FALSE,
+    user_id_reserve INT
 );
 
 
