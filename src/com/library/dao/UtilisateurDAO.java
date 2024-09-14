@@ -11,7 +11,7 @@ import resources.DatabaseConnection;
 
 public class UtilisateurDAO {
 
-    public boolean createUtilisateur(Utilisateur utilisateur) {
+    public boolean addUser(Utilisateur utilisateur) {
         Connection connection = null;
         PreparedStatement ps = null;
         String sql;
@@ -46,7 +46,6 @@ public class UtilisateurDAO {
             return false;
 
         } catch (SQLException e) {
-            // Replace with proper logging in production
             e.printStackTrace();
             return false;
         } finally {
@@ -54,7 +53,7 @@ public class UtilisateurDAO {
         }
     }
 
-    public Utilisateur getUtilisateurById(int id) {
+    public Utilisateur getUserById(int id) {
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -67,10 +66,9 @@ public class UtilisateurDAO {
 
             rs = ps.executeQuery();
             if (rs.next()) {
-                return extractUtilisateurFromResultSet(rs);
+                return extractUserFromResultSet(rs);
             }
         } catch (SQLException e) {
-            // Replace with proper logging in production
             e.printStackTrace();
         } finally {
             closeResources(rs, ps, connection);
@@ -78,7 +76,7 @@ public class UtilisateurDAO {
         return null;
     }
 
-    public boolean updateUtilisateur(Utilisateur utilisateur) {
+    public static boolean updateUser(Utilisateur utilisateur) {
         Connection connection = null;
         PreparedStatement ps = null;
         String sql;
@@ -106,7 +104,6 @@ public class UtilisateurDAO {
             return rowsAffected > 0;
 
         } catch (SQLException e) {
-            // Replace with proper logging in production
             e.printStackTrace();
             return false;
         } finally {
@@ -114,7 +111,7 @@ public class UtilisateurDAO {
         }
     }
 
-    public boolean deleteUtilisateur(int id) {
+    public boolean deleteUser(int id) {
         Connection connection = null;
         PreparedStatement ps = null;
 
@@ -128,7 +125,6 @@ public class UtilisateurDAO {
             return rowsAffected > 0;
 
         } catch (SQLException e) {
-            // Replace with proper logging in production
             e.printStackTrace();
             return false;
         } finally {
@@ -136,7 +132,9 @@ public class UtilisateurDAO {
         }
     }
 
-    public List<Utilisateur> getAllUtilisateurs() {
+
+
+    public List<Utilisateur> getAllUsers() {
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -149,7 +147,7 @@ public class UtilisateurDAO {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                Utilisateur utilisateur = extractUtilisateurFromResultSet(rs);
+                Utilisateur utilisateur = extractUserFromResultSet(rs);
                 utilisateurs.add(utilisateur);
             }
 
@@ -162,16 +160,11 @@ public class UtilisateurDAO {
         return utilisateurs;
     }
 
-    private Utilisateur extractUtilisateurFromResultSet(ResultSet rs) throws SQLException {
+    private Utilisateur extractUserFromResultSet(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
         String nom = rs.getString("nom");
         String prenom = rs.getString("prenom");
 
-        // Determine the user type based on the table
-        // Assuming 'type' or equivalent column is in 'Utilisateur' or another means to differentiate
-        // Add additional logic if needed
-
-        // You can use `getTableNameFromId` or similar approach to identify the table if you have such a setup
         String sql = "SELECT * FROM Etudiant WHERE id = ?";
         try (PreparedStatement ps = rs.getStatement().getConnection().prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -195,13 +188,12 @@ public class UtilisateurDAO {
         throw new SQLException("Unknown user type for ID: " + id);
     }
 
-    private void closeResources(AutoCloseable... resources) {
+    private static void closeResources(AutoCloseable... resources) {
         for (AutoCloseable resource : resources) {
             if (resource != null) {
                 try {
                     resource.close();
                 } catch (Exception e) {
-                    // Replace with proper logging in production
                     e.printStackTrace();
                 }
             }

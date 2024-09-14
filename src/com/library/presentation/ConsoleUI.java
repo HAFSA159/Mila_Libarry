@@ -4,7 +4,13 @@ import com.library.dao.DocumentDAO;
 import com.library.dao.UtilisateurDAO;
 import com.library.model.*;
 import com.library.utilitaire.InputValidator;
+import resources.DatabaseConnection;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
@@ -77,9 +83,6 @@ public class ConsoleUI {
                     break;
 
                 case 3:
-                    // listDocuments();
-
-                case 4:
                     if ("Admin".equals(userRole)) {
                         updateDocument();
                     } else if ("Professor".equals(userRole)) {
@@ -89,7 +92,7 @@ public class ConsoleUI {
                     }
                     break;
 
-                case 5:
+                case 4:
                     if ("Admin".equals(userRole)) {
                         deleteDocument();
                     } else {
@@ -97,7 +100,7 @@ public class ConsoleUI {
                     }
                     break;
 
-                case 6:
+                case 5:
                     if ("Admin".equals(userRole)) {
                         manageUsers();
                     }
@@ -107,33 +110,31 @@ public class ConsoleUI {
                     System.out.println("Invalid choice. Please try again.");
             }
 
-        } while (choice != 6);
+        } while (choice != 5);
     }
+
 
     private void displayAdminMenu() {
         System.out.println("1. Add a document");
         System.out.println("2. Search for a document");
-        System.out.println("3. List all documents");
-        System.out.println("4. Update a document");
-        System.out.println("5. Delete a document");
-        System.out.println("6. Manage Users");
-        System.out.println("7. Exit");
+        System.out.println("3. Update a document");
+        System.out.println("4. Delete a document");
+        System.out.println("5. Manage Users");
+        System.out.println("6. Exit");
     }
 
     private void displayProfessorMenu() {
         System.out.println("1. Borrow a document");
         System.out.println("2. Search for a document");
-        System.out.println("3. List all documents");
-        System.out.println("4. Reserve a document");
-        System.out.println("5. Exit");
+        System.out.println("3. Reserve a document");
+        System.out.println("4. Exit");
     }
 
     private void displayStudentMenu() {
         System.out.println("1. Borrow a document");
         System.out.println("2. Search for a document");
-        System.out.println("3. List all documents");
-        System.out.println("4. Reserve a document");
-        System.out.println("5. Exit");
+        System.out.println("3. Reserve a document");
+        System.out.println("4. Exit");
     }
 
     //CRUD DOC
@@ -271,7 +272,6 @@ public class ConsoleUI {
         }
     }
 
-
     // CRUD For User
 
     private void manageUsers() {
@@ -338,7 +338,7 @@ public class ConsoleUI {
         Etudiant etudiant = new Etudiant(0, name, prenom, matricule);
         UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
 
-        boolean success = utilisateurDAO.createUtilisateur(etudiant);
+        boolean success = utilisateurDAO.addUser(etudiant);
         if (success) {
             System.out.println("Student added successfully!");
         } else {
@@ -357,7 +357,7 @@ public class ConsoleUI {
         Professeur professeur = new Professeur(0, name, prenom, departement);
         UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
 
-        boolean success = utilisateurDAO.createUtilisateur(professeur);
+        boolean success = utilisateurDAO.addUser(professeur);
         if (success) {
             System.out.println("Professor added successfully!");
         } else {
@@ -372,7 +372,7 @@ public class ConsoleUI {
         int id = InputValidator.getIntInput();
 
         UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
-        Utilisateur utilisateur = utilisateurDAO.getUtilisateurById(id);
+        Utilisateur utilisateur = utilisateurDAO.getUserById(id);
 
         if (utilisateur == null) {
             System.out.println("User not found.");
@@ -380,24 +380,70 @@ public class ConsoleUI {
         }
 
         if (utilisateur instanceof Etudiant) {
-            Etudiant etudiant = (Etudiant) utilisateur;
-
-            System.out.print("Enter new name (or press Enter to keep the current name): ");
-            String name = scanner.nextLine();
-            if (!name.isEmpty()) {
-                etudiant.setNom(name);
-            }
-
-            boolean success = utilisateurDAO.updateUtilisateur(etudiant);
-            if (success) {
-                System.out.println("User updated successfully!");
-            } else {
-                System.out.println("Failed to update user.");
-            }
+            updateEtudiant((Etudiant) utilisateur);
+        } else if (utilisateur instanceof Professeur) {
+            updateProfesseur((Professeur) utilisateur);
         } else {
             System.out.println("Unsupported user type.");
         }
     }
+
+    private void updateEtudiant(Etudiant etudiant) {
+        System.out.println("Updating Etudiant...");
+        System.out.print("Enter new name (or press Enter to keep the current name, " + etudiant.getNom() + "): ");
+        String name = scanner.nextLine();
+        if (!name.isEmpty()) {
+            etudiant.setNom(name);
+        }
+
+        System.out.print("Enter new prenom (or press Enter to keep the current prenom, " + etudiant.getPrenom() + "): ");
+        String prenom = scanner.nextLine();
+        if (!prenom.isEmpty()) {
+            etudiant.setPrenom(prenom);
+        }
+
+        System.out.print("Enter new matricule (or press Enter to keep the current matricule, " + etudiant.getMatricule() + "): ");
+        String matricule = scanner.nextLine();
+        if (!matricule.isEmpty()) {
+            etudiant.setMatricule(matricule);
+        }
+
+        boolean success = UtilisateurDAO.updateUser(etudiant);
+        if (success) {
+            System.out.println("Etudiant updated successfully!");
+        } else {
+            System.out.println("Failed to update Etudiant.");
+        }
+    }
+
+    private void updateProfesseur(Professeur professeur) {
+        System.out.println("Updating Professeur...");
+        System.out.print("Enter new name (or press Enter to keep the current name, " + professeur.getNom() + "): ");
+        String name = scanner.nextLine();
+        if (!name.isEmpty()) {
+            professeur.setNom(name);
+        }
+
+        System.out.print("Enter new prenom (or press Enter to keep the current prenom, " + professeur.getPrenom() + "): ");
+        String prenom = scanner.nextLine();
+        if (!prenom.isEmpty()) {
+            professeur.setPrenom(prenom);
+        }
+
+        System.out.print("Enter new department (or press Enter to keep the current department, " + professeur.getDepartement() + "): ");
+        String department = scanner.nextLine();
+        if (!department.isEmpty()) {
+            professeur.setDepartement(department);
+        }
+
+        boolean success = UtilisateurDAO.updateUser(professeur);
+        if (success) {
+            System.out.println("Professeur updated successfully!");
+        } else {
+            System.out.println("Failed to update Professeur.");
+        }
+    }
+
 
     private void deleteUser() {
         System.out.println("=== Delete User ===");
@@ -405,7 +451,7 @@ public class ConsoleUI {
         int id = InputValidator.getIntInput();
 
         UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
-        boolean success = utilisateurDAO.deleteUtilisateur(id);
+        boolean success = utilisateurDAO.deleteUser(id);
         if (success) {
             System.out.println("User deleted successfully!");
         } else {
@@ -416,7 +462,7 @@ public class ConsoleUI {
     private void listUsers() {
         System.out.println("=== List Users ===");
         UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
-        List<Utilisateur> utilisateurs = utilisateurDAO.getAllUtilisateurs();
+        List<Utilisateur> utilisateurs = utilisateurDAO.getAllUsers();
 
         if (utilisateurs.isEmpty()) {
             System.out.println("No users found.");
@@ -426,5 +472,6 @@ public class ConsoleUI {
             }
         }
     }
+
 
 }
