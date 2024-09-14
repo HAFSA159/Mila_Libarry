@@ -100,15 +100,13 @@ public class ConsoleUI {
                     if ("Admin".equals(userRole)) {
                         manageUsers();
                     } else {
-                        System.out.println("Goodbye!");
+                        returnDocument();
                     }
                     break;
 
                 case 6:
-                    if ("Admin".equals(userRole)) {
                         System.out.println("Goodbye!");
                         System.exit(0);
-                    }
                     break;
 
                 default:
@@ -132,7 +130,8 @@ public class ConsoleUI {
         System.out.println("2. Search for a document");
         System.out.println("3. Reserve a document");
         System.out.println("4. Cancel a document");
-        System.out.println("5. Exit");
+        System.out.println("5. Return a document");
+        System.out.println("6. Exit");
     }
 
     private void displayStudentMenu() {
@@ -140,7 +139,8 @@ public class ConsoleUI {
         System.out.println("2. Search for a document");
         System.out.println("3. Reserve a document");
         System.out.println("4. Cancel a document");
-        System.out.println("5. Exit");
+        System.out.println("5. Return a document");
+        System.out.println("6. Exit");
     }
 
     //CRUD DOC
@@ -355,6 +355,19 @@ public class ConsoleUI {
             System.out.println("Reservation successfully canceled.");
         } else {
             System.out.println("Failed to cancel the reservation. Please check the document ID and try again.");
+        }
+    }
+
+    public void returnDocument() {
+        System.out.println("=== Return a Document ===");
+        System.out.print("Enter the ID of the document to return: ");
+        int documentId = InputValidator.getIntInput();
+
+        boolean success = DocumentDAO.returnDocument(documentId);
+        if (success) {
+            System.out.println("Document successfully returned.");
+        } else {
+            System.out.println("Failed to return the document. Please try again.");
         }
     }
 
