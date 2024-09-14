@@ -363,6 +363,22 @@ public class DocumentDAO {
         return false;
     }
 
+    public static boolean cancelReservation(int documentId) {
+        Connection connection = DatabaseConnection.connect();
+        String updateQuery = "UPDATE Document SET reserve = FALSE, user_id_reserve = NULL WHERE id = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(updateQuery)) {
+            ps.setInt(1, documentId);
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
 
 
 

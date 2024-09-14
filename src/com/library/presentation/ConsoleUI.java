@@ -92,14 +92,22 @@ public class ConsoleUI {
                 case 4:
                     if ("Admin".equals(userRole)) {
                         deleteDocument();
+                    } else
+                        cancelReservation();
+
+                    break;
+                case 5:
+                    if ("Admin".equals(userRole)) {
+                        manageUsers();
                     } else {
                         System.out.println("Goodbye!");
                     }
                     break;
 
-                case 5:
+                case 6:
                     if ("Admin".equals(userRole)) {
-                        manageUsers();
+                        System.out.println("Goodbye!");
+                        System.exit(0);
                     }
                     break;
 
@@ -107,9 +115,8 @@ public class ConsoleUI {
                     System.out.println("Invalid choice. Please try again.");
             }
 
-        } while (choice != 5);
+        } while (choice != 6);
     }
-
 
     private void displayAdminMenu() {
         System.out.println("1. Add a document");
@@ -124,14 +131,16 @@ public class ConsoleUI {
         System.out.println("1. Borrow a document");
         System.out.println("2. Search for a document");
         System.out.println("3. Reserve a document");
-        System.out.println("4. Exit");
+        System.out.println("4. Cancel a document");
+        System.out.println("5. Exit");
     }
 
     private void displayStudentMenu() {
         System.out.println("1. Borrow a document");
         System.out.println("2. Search for a document");
         System.out.println("3. Reserve a document");
-        System.out.println("4. Exit");
+        System.out.println("4. Cancel a document");
+        System.out.println("5. Exit");
     }
 
     //CRUD DOC
@@ -334,6 +343,21 @@ public class ConsoleUI {
             System.out.println("Failed to reserve the document. Please check the document ID and try again.");
         }
     }
+
+    private void cancelReservation() {
+        System.out.println("=== Cancel Reservation ===");
+        System.out.print("Enter the ID of the document to cancel the reservation: ");
+        int documentId = InputValidator.getIntInput();
+
+        boolean success = DocumentDAO.cancelReservation(documentId);
+
+        if (success) {
+            System.out.println("Reservation successfully canceled.");
+        } else {
+            System.out.println("Failed to cancel the reservation. Please check the document ID and try again.");
+        }
+    }
+
 
     // CRUD For User
 
