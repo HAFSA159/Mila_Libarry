@@ -331,14 +331,14 @@ public class DocumentDAO {
 
     public static boolean isAvailable(int documentId, String documentType) {
         Connection connection = DatabaseConnection.connect();
-        String query = "SELECT reserved FROM " + documentType + " WHERE id = ?";
+        String query = "SELECT reserve FROM " + documentType + " WHERE id = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, documentId);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                return !rs.getBoolean("reserved");
+                return !rs.getBoolean("reserve");
             }
         } catch (SQLException e) {
             e.printStackTrace();
