@@ -61,7 +61,6 @@ L'architecture en couches sépare les responsabilités en trois parties :
 - Ajout d'un module de **recommandation de documents** basé sur les emprunts passés des utilisateurs.
 - Intégration de nouvelles fonctionnalités comme un **système de pénalités** pour les retours en retard.
 
-## Auteur et Contact
+## Auteur
 
 - **Auteur** : Hafsa Elmoatassim Billah
-- **Contact** : [hafsa.elmoatassim@gmail.com](mailto:hafsa.elmoatassim@gmail.com)
